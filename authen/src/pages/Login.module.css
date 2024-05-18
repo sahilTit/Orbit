@@ -1,0 +1,66 @@
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url(https://media.istockphoto.com/id/865135920/photo/concrete-texture.jpg?s=2048x2048&w=is&k=20&c=PtAMzlwKOYCqAYY3CtJL8Pd3cKtQEkcXzXFX59rRD7U=);
+}
+.sect {
+  width: 40%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #1d0667c3;
+}
+.log {
+  color: #000000;
+}
+.iner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* gap: 0.5rem; */
+  flex-direction: column;
+}
+.inp {
+  width: 15rem;
+  height: 2rem;
+  border-radius: 2rem;
+  border: none;
+  font-size: 1.2rem;
+}
+.btn {
+  width: 15rem;
+  height: 2rem;
+  border-radius: 2rem;
+  border: none;
+  text-decoration: none;
+  background-color: aqua;
+  cursor: pointer;
+}
+a{
+    text-decoration: none;
+    color: #000000;
+
+}
+@media (max-width: 636px) {
+    .inp{
+        width: 9rem;
+    }
+    .btn{
+        width: 9rem;
+    }
+}
+@media (max-width: 356px) {
+  .inp{
+      width: 7rem;
+  }
+  .btn{
+      width: 7rem;
+  }
+}
