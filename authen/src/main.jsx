@@ -9,22 +9,22 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import Homepage from "./pages/Homepage.jsx";
-// import Signup from "./pages/Signup.jsx";
-// import Login from "./pages/Login.jsx";
+import About from "./pages/About.jsx";
 import Logt from "./pages/Logt.jsx";
-import Layout from "./Layout.jsx";
+import Table from "./pages/Table.jsx";
+import Layout from "./MainLayout.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route path="/" element={<Logt />} />
-      {/* <privateRoute></privateRoute> */}
-      <Route path="/home" element={<Homepage />} />
+      <Route path="home" element={<Homepage />}>
+        <Route path="table" element={<Table />} />
+        <Route path="about" element={<About />} />
+      </Route>
       <Route path="*" element={<Logt />} />
-
-      {/* <Route path="signup" element={<Signup />} /> */}
-      {/* <Route path="/about" element={<About />} /> */}
+      {/* <Route path="/" element={<SecLayout />}></Route> */}
     </Route>
   )
 );
