@@ -1,17 +1,6 @@
-import { Route, Redirect } from "react-router-dom";
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = () => {
-    localStorage.removeItem("auth_token");
-    sessionStorage.removeItem("auth_token");
-  };
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
-};
+import { Navigate, Outlet } from "react-router-dom";
 
-export default ProtectedRoute;
+export default function ProtectedRoute() {
+  let auth = localStorage.getItem("auth_token");
+  return auth ? <Outlet /> : <Navigate to="/" />;
+}

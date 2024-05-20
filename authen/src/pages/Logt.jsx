@@ -41,7 +41,7 @@ const Logt = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container w-100">
         <div className="row mt-5">
           {/* {user && user.ResponseCode &&<div className="alert alert-danger">{user.ResponseMsg}</div>} */}
 
