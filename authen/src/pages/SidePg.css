@@ -5,10 +5,14 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #818181;
+  background-color: #a29a9a;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  border: 2px solid black;
+}
+.side-drop{
+  background-color: rgb(129, 128, 128);
 }
 
 .sidebar a {
@@ -35,6 +39,9 @@
 .header {
   justify-content: space-between;
   align-items: center;
+  /* background-color: #000000; */
+  /* background: #b3b6c4; */
+  /* background: red; */
 }
 .openbtn {
   font-size: 15px;
@@ -58,7 +65,9 @@
 #main {
   transition: margin-left 0.5s;
 }
-
+.tertiary{
+  background: #e0e1e9;
+}
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
   .sidebar {

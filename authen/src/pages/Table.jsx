@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import "./Table.css";
 import * as XLSX from "xlsx/xlsx.mjs";
 
 const Table = () => {
   const [user, setUser] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchPlazaData = async () => {
@@ -40,31 +41,51 @@ const Table = () => {
     XLSX.writeFile(workbook, "PlazaData.xlsx");
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = user.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const totalPages = Math.ceil(user.length / itemsPerPage);
+
   return (
     <>
-      <div>
+      <div className="col">
         <table className="table ">
           <thead>
             <tr>
-              <th scope="col">sr.No</th>
+              <th scope="col">Sr.No</th>
               <th scope="col">Plaza id</th>
-              <th scope="col">name</th>
-              {/* <th scope="col">email</th>
-              <th scope="col">mobile</th> */}
+              <th scope="col">Name</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {user.map((eachData, index) => (
+            {currentItems.map((eachData, index) => (
               <tr key={eachData.plaza_id}>
-                <th scope="row">{index + 1}</th>
+                <th scope="row">{indexOfFirstItem + index + 1}</th>
                 <th scope="row">{eachData.plaza_id}</th>
                 <td>{eachData.name}</td>
-                {/* <td>{eachData.email}</td> */}
-                {/* <td>{eachData.mobile}</td> */}
+                <td>Del - Edit</td>
               </tr>
             ))}
           </tbody>
         </table>
+        <nav>
+          <ul className="pagination .ngx-pagination">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li key={index + 1} className="page-item">
+                <button
+                  onClick={() => paginate(index + 1)}
+                  className="page-link"
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
         <button className="btn btn-primary" onClick={downloadExcel}>
           Download Excel
         </button>

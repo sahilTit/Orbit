@@ -8,7 +8,6 @@ const Logt = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log();
     try {
       const res = await fetch("http://192.168.1.131/toll_manage/appv1/login", {
         method: "POST",
@@ -41,50 +40,44 @@ const Logt = () => {
 
   return (
     <>
-      <div className="container w-100">
-        <div className="row mt-5">
-          {/* {user && user.ResponseCode &&<div className="alert alert-danger">{user.ResponseMsg}</div>} */}
-
-          <div className="spContainer card mx-auto p-5">
-            <div className="card px-4 py-5 border-0 shadow">
-              <div className="d-inline text-left mb-5">
-                <h3 className="font-weight-bold text-center">Login</h3>
-                {errMsg && <div className="alert alert-danger">{errMsg}</div>}
-              </div>
-              <form
-                className="d-inline text-center mx-auto"
-                onSubmit={handleSubmit}
-              >
-                <div className="d-inline text-center mb-2">
-                  <div className="form-group mx-auto pb-3">
-                    <input
-                      required
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="form-control inpSp"
-                      type="email"
-                      placeholder="User-Email"
-                    />
-                  </div>
-                </div>
-                <div className="d-inline text-center mb-3">
-                  <div className="form-group mx-auto  pb-3">
-                    <input
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="form-control inpSp"
-                      type="password"
-                      placeholder="Password"
-                    />
-                  </div>
-                </div>
-                <div className="d-inline text-left mb-3">
-                  <div className="form-group mx-auto">
-                    <button className="btn btn-danger">Confirm</button>
-                  </div>
-                </div>
-              </form>
-            </div>
+      <div className="maindiv">
+        <div className="card px-5 py-5  shadow">
+          <div className="d-inline text-left mb-5">
+            <h3 className="font-weight-bold text-center">Login</h3>
+            {errMsg && <div className="alert alert-danger">{errMsg}</div>}
           </div>
+          <form
+            className="d-inline text-center mx-auto"
+            onSubmit={handleSubmit}
+          >
+            <div className="d-inline text-center mb-2">
+              <div className="form-group mx-auto pb-3">
+                <input
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="form-control inpSp"
+                  type="email"
+                  placeholder="User-Email"
+                />
+              </div>
+            </div>
+            <div className="d-inline text-center mb-3">
+              <div className="form-group mx-auto  pb-3">
+                <input
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="form-control inpSp"
+                  type="password"
+                  placeholder="Password"
+                />
+              </div>
+            </div>
+            <div className="d-inline text-left mb-3">
+              <div className="form-group mx-auto">
+                <button className="btn btn-danger">Confirm</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </>
@@ -93,4 +86,3 @@ const Logt = () => {
 
 export default Logt;
 
-//80 port number not seen all can be seen
