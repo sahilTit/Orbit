@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./SidePg.css";
 import SecLayout from "../SecLayout";
+import { MdOutlineArrowDropDown } from "react-icons/md";
 
 const SidePg = () => {
   const [sidebarWidth, setSidebarWidth] = useState("0");
@@ -50,6 +51,7 @@ const SidePg = () => {
               aria-expanded="true"
             >
               Home
+              <MdOutlineArrowDropDown />
             </button>
             <div className="collapse show" id="home-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">

@@ -32,9 +32,9 @@ const About = () => {
 
   return (
     <>
-      <div className="col">
-        <table className="table ">
-          <thead className="">
+      <div className="col mt-3">
+        <table className="table table-hover">
+          <thead className="table-dark fs-6">
             <tr>
               <th scope="col">sr.No</th>
               <th scope="col">Name</th>
@@ -57,7 +57,7 @@ const About = () => {
           </tbody>
         </table>
         <nav className="">
-          <ul className="pagination  ">
+          <ul className="pagination  justify-content-end p-3">
             {Array.from({ length: totalPages }, (_, index) => (
               <li key={index + 1} className="page-item">
                 <button

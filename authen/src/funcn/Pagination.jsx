@@ -1,121 +1,98 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import "./SidePg.css";
+import SecLayout from "../SecLayout";
 
-const defaultButton = props => <button {...props}>{props.children}</button>;
+const SidePg = () => {
+  const [sidebarWidth, setSidebarWidth] = useState("0");
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
-export default class Pagination extends React.Component {
-  constructor(props) {
-    super();
+  const navigate = useNavigate();
 
-    this.changePage = this.changePage.bind(this);
-
-    this.state = {
-      visiblePages: this.getVisiblePages(null, props.pages)
-    };
-  }
-
-  static propTypes = {
-    pages: PropTypes.number,
-    page: PropTypes.number,
-    PageButtonComponent: PropTypes.any,
-    onPageChange: PropTypes.func,
-    previousText: PropTypes.string,
-    nextText: PropTypes.string
+  const handleLogout = () => {
+    localStorage.clear();
+    sessionStorage.removeItem("auth_token");
+    navigate("/");
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.pages !== nextProps.pages) {
-      this.setState({
-        visiblePages: this.getVisiblePages(null, nextProps.pages)
-      });
-    }
-
-    this.changePage(nextProps.page + 1);
-  }
-
-  filterPages = (visiblePages, totalPages) => {
-    return visiblePages.filter(page => page <= totalPages);
+  const openNav = () => {
+    setSidebarWidth("250px");
   };
 
-  getVisiblePages = (page, total) => {
-    if (total < 7) {
-      return this.filterPages([1, 2, 3, 4, 5, 6], total);
+  const closeNav = () => {
+    setSidebarWidth("0");
+  };
+
+  const toggleNav = () => {
+    if (isSideBarOpen) {
+      closeNav();
     } else {
-      if (page % 5 >= 0 && page > 4 && page + 2 < total) {
-        return [1, page - 1, page, page + 1, total];
-      } else if (page % 5 >= 0 && page > 4 && page + 2 >= total) {
-        return [1, total - 3, total - 2, total - 1, total];
-      } else {
-        return [1, 2, 3, 4, 5, total];
-      }
+      openNav();
     }
+    setIsSideBarOpen(!isSideBarOpen);
   };
 
-  changePage(page) {
-    const activePage = this.props.page + 1;
-
-    if (page === activePage) {
-      return;
-    }
-
-    const visiblePages = this.getVisiblePages(page, this.props.pages);
-
-    this.setState({
-      visiblePages: this.filterPages(visiblePages, this.props.pages)
-    });
-
-    this.props.onPageChange(page - 1);
-  }
-
-  render() {
-    const { PageButtonComponent = defaultButton } = this.props;
-    const { visiblePages } = this.state;
-    const activePage = this.props.page + 1;
-
-    return (
-      <div className="Table__pagination">
-        <div className="Table__prevPageWrapper">
-          <PageButtonComponent
-            className="Table__pageButton"
-            onClick={() => {
-              if (activePage === 1) return;
-              this.changePage(activePage - 1);
-            }}
-            disabled={activePage === 1}
-          >
-            {this.props.previousText}
-          </PageButtonComponent>
-        </div>
-        <div className="Table__visiblePagesWrapper">
-          {visiblePages.map((page, index, array) => {
-            return (
-              <PageButtonComponent
-                key={page}
-                className={
-                  activePage === page
-                    ? "Table__pageButton Table__pageButton--active"
-                    : "Table__pageButton"
-                }
-                onClick={this.changePage.bind(null, page)}
-              >
-                {array[index - 1] + 2 < page ? `...${page}` : page}
-              </PageButtonComponent>
-            );
-          })}
-        </div>
-        <div className="Table__nextPageWrapper">
-          <PageButtonComponent
-            className="Table__pageButton"
-            onClick={() => {
-              if (activePage === this.props.pages) return;
-              this.changePage(activePage + 1);
-            }}
-            disabled={activePage === this.props.pages}
-          >
-            {this.props.nextText}
-          </PageButtonComponent>
+  return (
+    <div className="wrapper">
+      <div id="mySidebar" className="sidebar" style={{ width: sidebarWidth }}>
+        <NavLink to="/home">Home</NavLink>
+        <div className="side-drop">
+          <ul className="mb-1 ul.components">
+            <button
+              className="btn btn-toggle d-inline-flex align-items-center py-2 px-5 rounded border-0"
+              data-bs-toggle="collapse"
+              data-bs-target="#home-collapse"
+              aria-expanded="true"
+            >
+              Home
+            </button>
+            <div className="collapse show" id="home-collapse">
+              <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <NavLink
+                    to="master"
+                    className="text-decoration-none text-white rounded"
+                  >
+                    Master
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="table" className="text-decoration-none rounded">
+                    Table
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="paginated"
+                    className="text-decoration-none rounded"
+                  >
+                    Pagi
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </ul>
         </div>
       </div>
-    );
-  }
-}
+      <div id="content">
+        <div className="header bg-primary d-flex tertiary">
+          <button className="openbtn bg-secondary" onClick={toggleNav}>
+            ☰
+          </button>
+          <h2>Orbit Demo Pump (Fy-2024-2025)</h2>
+          <div>
+            <button className="bg-danger lgotbtn" onClick={handleLogout}>
+              LogoOut
+            </button>
+          </div>
+        </div>
+        <div className="main-content">
+          <h3>Dashboard</h3>
+          <SecLayout />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SidePg;

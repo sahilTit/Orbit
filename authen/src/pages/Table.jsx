@@ -5,6 +5,11 @@ const Table = () => {
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [search, setSearch] = useState("");
+
+  // const data = {
+  //   node:name.filter()
+  // }
 
   useEffect(() => {
     const fetchPlazaData = async () => {
@@ -41,39 +46,67 @@ const Table = () => {
     XLSX.writeFile(workbook, "PlazaData.xlsx");
   };
 
+  const filteredData = user.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
+  );
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = user.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const totalPages = Math.ceil(user.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
 
   return (
     <>
-      <div className="col">
-        <table className="table ">
-          <thead>
-            <tr>
-              <th scope="col">Sr.No</th>
-              <th scope="col">Plaza id</th>
-              <th scope="col">Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((eachData, index) => (
-              <tr key={eachData.plaza_id}>
-                <th scope="row">{indexOfFirstItem + index + 1}</th>
-                <th scope="row">{eachData.plaza_id}</th>
-                <td>{eachData.name}</td>
-                <td>Del - Edit</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="row  m-3">
+        <div className="row ">
+          <div className="col-3">
+            <input
+              className="form-control "
+              id="search"
+              value={search}
+              type="text"
+              onChange={handleSearch}
+              placeholder="search"
+            />
+          </div>
+          <div className="col-4">
+            <button className="btn btn-primary btn-sm" onClick={downloadExcel}>
+              Download Excel
+            </button>
+          </div>
+        </div>
+        <div className="row mt-3">
+          <div className="col ">
+            <table className="table table-hover  ">
+              <thead className="table-dark fs-6">
+                <tr>
+                  <th scope="col">Sr.No</th>
+                  <th scope="col">Plaza id</th>
+                  <th scope="col">Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.map((eachData, index) => (
+                  <tr key={eachData.plaza_id}>
+                    <th scope="row">{indexOfFirstItem + index + 1}</th>
+                    <th scope="row">{eachData.plaza_id}</th>
+                    <td>{eachData.name}</td>
+                    <td>Del - Edit</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
         <nav>
-          <ul className="pagination .ngx-pagination">
+          <ul className="pagination .ngx-pagination justify-content-end p-3">
             {Array.from({ length: totalPages }, (_, index) => (
               <li key={index + 1} className="page-item">
                 <button
@@ -86,9 +119,6 @@ const Table = () => {
             ))}
           </ul>
         </nav>
-        <button className="btn btn-primary" onClick={downloadExcel}>
-          Download Excel
-        </button>
       </div>
     </>
   );
