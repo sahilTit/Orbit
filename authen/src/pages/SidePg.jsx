@@ -34,6 +34,7 @@ const SidePg = () => {
     }
     setIsSideBarOpen(!isSideBarOpen);
   };
+
   return (
     <div>
       <div
@@ -56,28 +57,13 @@ const SidePg = () => {
             <div className="collapse show" id="home-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none  text-white rounded"
-                  >
-                    <NavLink to="master">Master</NavLink>
-                  </a>
+                  <NavLink to="master">Master</NavLink>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                  >
-                    <NavLink to="table">Table</NavLink>
-                  </a>
+                  <NavLink to="table">Table</NavLink>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                  >
-                    <NavLink to="paginated">Pagi</NavLink>
-                  </a>
+                  <NavLink to=""></NavLink>
                 </li>
               </ul>
             </div>
@@ -85,11 +71,11 @@ const SidePg = () => {
         </div>
       </div>
       <div id="main" style={{ marginLeft: marginLeft }}>
-        <div className="header bg-primary d-flex tertiary">
+        <div className="header bg-info1 d-flex tertiary ">
           <button className="openbtn bg-secondary" onClick={toggleNav}>
             ☰
           </button>
-          <h2>Orbit Demo Pump (Fy-2024-2025)</h2>
+          <h2></h2>
           <div>
             <button className="bg-danger lgotbtn" onClick={handleLogout}>
               LogoOut
@@ -97,6 +83,7 @@ const SidePg = () => {
           </div>
         </div>
         <h3>Dashboard</h3>
+        {/* <Toast></Toast> */}
         <SecLayout />
       </div>
     </div>

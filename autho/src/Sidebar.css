@@ -1,0 +1,19 @@
+.sidebar {
+  position: fixed;
+  top: 56px; /* Adjust based on header height */
+  left: 0;
+  width: 200px;
+  height: calc(100% - 56px); /* Adjust based on header height */
+  background: #343a40;
+  color: #fff;
+  padding: 20px;
+  transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+  width: 0px;
+}
+
+.sidebar .nav-link {
+  color: #fff;
+}

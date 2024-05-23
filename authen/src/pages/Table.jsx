@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx/xlsx.mjs";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import { FaRegEdit } from "react-icons/fa";
 
 const Table = () => {
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [search, setSearch] = useState("");
+  const [show, setShow] = useState(false);
 
-  // const data = {
-  //   node:name.filter()
-  // }
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchPlazaData = async () => {
@@ -61,6 +65,9 @@ const Table = () => {
     setSearch(e.target.value);
   };
 
+  const handleClear = () => {
+    setSearch("");
+  };
   return (
     <>
       <div className="row  m-3">
@@ -69,16 +76,25 @@ const Table = () => {
             <input
               className="form-control "
               id="search"
+              // value={search}
               value={search}
               type="text"
               onChange={handleSearch}
               placeholder="search"
             />
           </div>
+          <div className="col-2">
+            <button className="btn btn-success btn-sm" onClick={handleClear}>
+              Clear
+            </button>
+          </div>
           <div className="col-4">
             <button className="btn btn-primary btn-sm" onClick={downloadExcel}>
               Download Excel
             </button>
+          </div>
+          <div className="col-2">
+            <Button>Add</Button>
           </div>
         </div>
         <div className="row mt-3">
@@ -98,7 +114,13 @@ const Table = () => {
                     <th scope="row">{indexOfFirstItem + index + 1}</th>
                     <th scope="row">{eachData.plaza_id}</th>
                     <td>{eachData.name}</td>
-                    <td>Del - Edit</td>
+                    <td>
+                      <div className="">
+                        <Button variant="primary" onClick={handleShow}>
+                          <FaRegEdit />
+                        </Button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -119,6 +141,37 @@ const Table = () => {
             ))}
           </ul>
         </nav>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="email" placeholder="name" autoFocus />
+              </Form.Group>
+              {/* <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>Example textarea</Form.Label>
+                <Form.Control as="textarea" rows={3} />
+              </Form.Group> */}
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </>
   );

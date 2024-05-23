@@ -1,0 +1,17 @@
+.user_img {
+    width: 60%;
+    position: relative;
+  }
+  .m-r-custom {
+    margin-right: 70%;
+  }
+  .navbar {
+    z-index: 999;
+  }
+  .user_menu li:hover {
+    box-shadow: 3px 3px 2px #ddd;
+  }
+  a {
+    text-decoration: none;
+  }
+  

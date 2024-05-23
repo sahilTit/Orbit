@@ -15,7 +15,8 @@ import Table from "./pages/Table.jsx";
 import Layout from "./MainLayout.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
-import Paginated from "./pages/Paginated.jsx"
+// import Paginated from "./pages/Paginated.jsx";
+import Toast from "./pages/Toast.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,9 +24,10 @@ const router = createBrowserRouter(
       <Route path="/" element={<Logt />} />
       <Route element={<ProtectedRoute />}>
         <Route path="home" element={<Homepage />}>
+          <Route index element={<Toast />} />
           <Route path="table" element={<Table />} />
           <Route path="master" element={<About />} />
-          <Route path="paginated" element={<Paginated />} />
+          {/* <Route path="paginated" element={<Paginated />} /> */}
         </Route>
       </Route>
       <Route path="*" element={<Logt />} />

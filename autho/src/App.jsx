@@ -1,38 +1,26 @@
-import React, { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import Content from "./Content";
+import "./App.css";
 
-const Sidebar = () => {
-  const [sidebarWidth, setSidebarWidth] = useState('0');
-  const [marginLeft, setMarginLeft] = useState('0');
+const App = () => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const openNav = () => {
-    setSidebarWidth('250px');
-    setMarginLeft('250px');
-  };
-
-  const closeNav = () => {
-    setSidebarWidth('0');
-    setMarginLeft('0');
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
   return (
-    <div>
-      <div id="mySidebar" className="sidebar" style={{ width: sidebarWidth }}>
-        <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>×</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-      </div>
-
-      <div id="main" style={{ marginLeft: marginLeft }}>
-        {/* {onClick?<button className='openbtn' onClick={}></button>} */}
-        <button className="openbtn" onClick={openNav}>☰ Open Sidebar</button>  
-        <h2>Collapsed Sidebar</h2>
-        <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p>
+    <div className="app">
+      <Header toggleSidebar={toggleSidebar} />
+      <div className="main-layout">
+        <Sidebar isCollapsed={isCollapsed} />
+        <Content />
       </div>
     </div>
   );
 };
 
-export default Sidebar;
+export default App;
