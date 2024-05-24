@@ -16,8 +16,12 @@ const App = () => {
     <div className="app">
       <Header toggleSidebar={toggleSidebar} />
       <div className="main-layout">
-        <Sidebar isCollapsed={isCollapsed} />
-        <Content />
+        <div>
+          <Sidebar isCollapsed={isCollapsed} />
+        </div>
+        <div>
+          <Content />
+        </div>
       </div>
     </div>
   );

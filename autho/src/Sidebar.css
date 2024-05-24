@@ -2,15 +2,14 @@
   position: fixed;
   top: 56px; /* Adjust based on header height */
   left: 0;
-  width: 200px;
+  width: 160px;
   height: calc(100% - 56px); /* Adjust based on header height */
   background: #343a40;
   color: #fff;
-  padding: 20px;
   transition: width 0.3s;
 }
 
-.sidebar.collapsed {
+.collapsed {
   width: 0px;
 }
 

@@ -2,9 +2,7 @@ import SidePg from "./SidePg";
 const Homepage = () => {
   return (
     <>
-      <div>
-        <SidePg></SidePg>
-      </div>
+      <SidePg></SidePg>
     </>
   );
 };

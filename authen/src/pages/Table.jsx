@@ -8,7 +8,7 @@ import { FaRegEdit } from "react-icons/fa";
 const Table = () => {
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(7);
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
 
@@ -70,6 +70,19 @@ const Table = () => {
   };
   return (
     <>
+      <div className="col-12  mb-4 pt-3">
+        <div className="col-12 me-2 shadow d-flex justify-content-between align-items-center">
+          <div className="fs-3 p-2">Table</div>
+          <ul className="breadcrumb  bg-transparent mb-1 fs-6 p-2">
+            <li className="breadcrumb-item">
+              <a>Master</a>
+            </li>
+            <li aria-current="page" className="breadcrumb-item active">
+              Library
+            </li>
+          </ul>
+        </div>
+      </div>
       <div className="row  m-3">
         <div className="row ">
           <div className="col-3">
@@ -80,7 +93,7 @@ const Table = () => {
               value={search}
               type="text"
               onChange={handleSearch}
-              placeholder="search"
+              placeholder="Search"
             />
           </div>
           <div className="col-2">
@@ -116,7 +129,7 @@ const Table = () => {
                     <td>{eachData.name}</td>
                     <td>
                       <div className="">
-                        <Button variant="primary" onClick={handleShow}>
+                        <Button variant="primary p-1" onClick={handleShow}>
                           <FaRegEdit />
                         </Button>
                       </div>
