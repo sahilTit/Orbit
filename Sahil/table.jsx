@@ -71,25 +71,20 @@ const Table = () => {
 
   return (
     <>
-      <div className="container-fluid  ">
-        <div className="row mb-4">
-          <div className="col-12 shadow">
-            <nav className="pt-2 px-3">
-              <div className="f-s-24 p-t-2 float-left">table</div>
-
-              <ul className="breadcrumb float-right bg-transparent m-b-1">
-                <li className="breadcrumb-item">
-                  <h6>Table</h6>
-                </li>
-                <li className="breadcrumb-item active" aria-current="page">
-                  Table
-                </li>
-              </ul>
-            </nav>
-          </div>
+      <div className="col-12  mb-4 pt-3">
+        <div className="col-12 me-2 shadow d-flex justify-content-between align-items-center">
+          <div className="fs-3 p-2">Table</div>
+          <ul className="breadcrumb  bg-transparent mb-1 fs-6 p-2">
+            <li className="breadcrumb-item">
+              <a>Home</a>
+            </li>
+            <li aria-current="page" className="breadcrumb-item active">
+              Table
+            </li>
+          </ul>
         </div>
       </div>
-      <div className="col  m-3">
+      <div className="row  m-3">
         <div className="row ">
           <div className="col-3">
             <input
@@ -127,7 +122,7 @@ const Table = () => {
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody className="f-s-15">
+              <tbody>
                 {currentItems.map((eachData, index) => (
                   <tr key={eachData.plaza_id}>
                     <th scope="row">{indexOfFirstItem + index + 1}</th>

@@ -1,50 +1,54 @@
 <nav id="sidebar">
-  <div class="sidebar-header">
-    <h3 class="nav-head text-light text-center">Bootstrap</h3>
-  </div>
+      
+    <div class="sidebar-header">
+             
+       <h3 class="nav-head text-light text-center">Bootstrap</h3>
+         
+    </div>
+      
+    <ul class="list-unstyled components pt-0">
+             <!-- <p class="text-center text-light h4 text-light bg-muted bg-dark py-3 mb-0">Bharat Petrolium</p> -->      
+       <li>          <a routerLink = "dashboard"> <i class="fa fa-dashboard mr-3"></i>Dashboards</a>      </li>
+             
+       <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> <i class="fa fa-widgets mr-3"></i> Master</a>          
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+                           
+             <li routerLinkActive="">                  <a routerLink="petrolPumpList"> <i class="fa fa-list"></i> Petrol Pump List</a>              </li>
+                           
+             <li routerLinkActive="">                <a routerLink="ownerList"> <i class="fa fa-list"></i> Owner Petro List</a>            </li>
+                
+             <li routerLinkActive="">                <a routerLink="stateMaster"> <i class="fa fa-list"></i> State List</a>               </li>
+             <li routerLinkActive="">                <a routerLink="cityMaster"> <i class="fa fa-list"></i> City List</a>               </li>
+                
+             <li routerLinkActive="">                <a routerLink="financialMaster"> <i class="fa fa-list"></i> Financial Years</a>               </li>
 
-  <ul class="list-unstyled components pt-0">
-    <li>
-      <a routerLink="dashboard">
-        <i class="fa fa-dashboard mr-3"></i>Dashboards</a
-      >
-    </li>
-
-    <li class="active">
-      <a
-        href="#homeSubmenu"
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="dropdown-toggle"
-      >
-        <i class="fa fa-widgets mr-3"></i> Master</a
-      >
-      <ul class="collapse list-unstyled" id="homeSubmenu">
-        <li routerLinkActive="">
-          <a routerLink="petrolPumpList">
-            <i class="fa fa-list"></i> Petrol Pump List</a
-          >
-        </li>
-
-        <li routerLinkActive="">
-          <a routerLink="ownerList">
-            <i class="fa fa-list"></i> Owner Petro List</a
-          >
-        </li>
-
-        <li routerLinkActive="">
-          <a routerLink="stateMaster"> <i class="fa fa-list"></i> State List</a>
-        </li>
-        <li routerLinkActive="">
-          <a routerLink="cityMaster"> <i class="fa fa-list"></i> City List</a>
-        </li>
-
-        <li routerLinkActive="">
-          <a routerLink="financialMaster">
-            <i class="fa fa-list"></i> Financial Years</a
-          >
-        </li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+                           
+          </ul>
+                
+       </li>
+               
+       <!-- <li>                  <a href="#"> <i class="fa fa-asterisk mr-3"></i>About</a>       </li>
+             
+       <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-copy mr-3"></i>Pages</a>          
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+                           
+             <li>                  <a href="#"> <i class="fa fa-asterisk mr-3"></i> Page 1</a>              </li>
+                           
+             <li>                  <a href="#"> <i class="fa fa-asterisk mr-3"></i> Page 2</a>              </li>
+                           
+             <li>                  <a href="#"> <i class="fa fa-asterisk mr-3"></i> Page 3</a>              </li>
+                       
+          </ul>
+                
+       </li>
+             
+       <li>          <a href="#"> <i class="fa fa-asterisk mr-3"></i>Portfolio</a>      </li>
+             
+       <li>          <a href="#"> <i class="fa fa-phone mr-3"></i>Contact</a>      </li> -->
+         
+    </ul>
+    
+ </nav>
+ 

@@ -51,17 +51,22 @@ const Toast = () => {
 
   return (
     <>
-      <div className="col-12  mb-4 pt-3">
-        <div className="col-12 me-2 shadow d-flex justify-content-between align-items-center">
-          <div className="fs-3 p-2">Home</div>
-          <ul className="breadcrumb  bg-transparent mb-1 fs-6 p-2">
-            <li className="breadcrumb-item">
-              <a>Master</a>
-            </li>
-            <li aria-current="page" className="breadcrumb-item active">
-              Library
-            </li>
-          </ul>
+      <div className="container-fluid  ">
+        <div className="row mb-4">
+          <div className="col-12 shadow">
+            <nav className="pt-2 px-3">
+              <div className="f-s-24 p-t-2 float-left">Home</div>
+
+              <ul className="breadcrumb float-right bg-transparent m-b-1">
+                <li className="breadcrumb-item">
+                  <h6>Home</h6>
+                </li>
+                {/* <li className="breadcrumb-item active" aria-current="page">
+                  Role
+                </li> */}
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
 

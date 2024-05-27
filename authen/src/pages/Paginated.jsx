@@ -6,10 +6,10 @@ const Paginated = () => {
           <div className="fs-3 p-2">Dashboard</div>
           <ul className="breadcrumb  bg-transparent mb-1 fs-6 p-2">
             <li className="breadcrumb-item">
-              <a>Master</a>
+              <a>Home</a>
             </li>
             <li aria-current="page" className="breadcrumb-item active">
-              Library
+              Dash
             </li>
           </ul>
         </div>

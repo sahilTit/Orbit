@@ -17,7 +17,7 @@ const App = () => {
       <Header toggleSidebar={toggleSidebar} />
       <div className="main-layout">
         <div>
-          <Sidebar isCollapsed={isCollapsed} />
+          {/* <Sidebar isCollapsed={isCollapsed} /> */}
         </div>
         <div>
           <Content />

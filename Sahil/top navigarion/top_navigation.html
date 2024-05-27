@@ -1,104 +1,55 @@
-<li _ngcontent-c2="">
-  <!----><!----><a
-    _ngcontent-c2=""
-    aria-expanded="false"
-    class="dropdown-toggle collapsed"
-    data-toggle="collapse"
-    href="#homeSubmenu1"
-    ><i _ngcontent-c2="" class="fa fa-empire mr-3"></i> Master</a
-  ><!---->
-  <ul
-    _ngcontent-c2=""
-    class="list-unstyled sub_nav collapse"
-    routerlinkactive="show"
-    id="homeSubmenu1"
-    style=""
-  >
-    <!---->
-    <li _ngcontent-c2="" routerlinkactive="active" class="active">
-      <!----><a _ngcontent-c2="" href="#/admin/categoryMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Item Category </a
-      ><!----><!---->
+<nav class="navbar navbar-default top-fix-nav">
+  <div class="container-fluid">
+    <button type="button" id="sidebarCollapse" class="btn btn-light text-dark">
+      <i class="fa fa-bars"></i>
+    </button>
+    <span class="text-left text-light mr-auto ml-3 h4 text-light bg-muted mb-0"
+      >PETRO</span
+    >
+    <li class="nav-item dropdown list-unstyled m-0 h6 text-light">
+      {{ authData.name }}
     </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/itemMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Item</a
-      ><!----><!---->
+
+    <li class="nav-item dropdown list-unstyled m-l-7">
+      <img
+        src="../../../assets/admin/images/bookingSystem/2.png"
+        alt="user"
+        class="img-fluid rounded-circle mr-auto bg-info dropdown-toggle user_img"
+        data-toggle="dropdown"
+      />
+      <div class="dropdown-menu dropdown-menu-right animated zoomIn">
+        <ul class="list-group text-muted">
+          <a href="" class="user_menu">
+            <li class="list-group-item py-2 pl-3 f-s-14">
+              <i class="fa fa-user mr-2"></i>Profile
+            </li>
+          </a>
+
+          <a href="" class="user_menu">
+            <li class="list-group-item py-2 pl-3 f-s-14">
+              <i class="fa fa-bell-o mr-2"></i>Notifivation
+            </li>
+          </a>
+
+          <a href="" class="user_menu">
+            <li class="list-group-item py-2 pl-3 f-s-14">
+              <i class="fa fa-envelope mr-2"></i>Inbox
+            </li>
+          </a>
+
+          <a href="" class="user_menu">
+            <li class="list-group-item py-2 pl-3 f-s-14">
+              <i class="fa fa-cog mr-2"></i>Settings
+            </li>
+          </a>
+
+          <a routerLink="../logout" class="user_menu">
+            <li class="list-group-item py-2 pl-3 f-s-14">
+              <i class="fa fa-power-off mr-2"></i>Sign-out
+            </li>
+          </a>
+        </ul>
+      </div>
     </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/tankMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Tank</a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/dispenserMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Dispenser</a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/nozzleMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Nozzle </a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/pricelistMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Price List </a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/locationMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Location</a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/customerMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Customer</a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/openingStockMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Opening Stock </a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/paygate"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Payment Gateway</a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/cardMasterComponent"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Cards/Wallets </a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/designationMasterComponent"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Designations </a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/employeeMasterComponent"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Employees </a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/bozerMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Bozer</a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/offerMaster"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Offers </a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/customercenter"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Customer Group</a
-      ><!----><!---->
-    </li>
-    <li _ngcontent-c2="" routerlinkactive="active">
-      <!----><a _ngcontent-c2="" href="#/admin/reminderMasterComponent"
-        ><i _ngcontent-c2="" class="fa fa-circle-o mr-3"></i> Reminders </a
-      ><!----><!---->
-    </li>
-  </ul>
-</li>
+  </div>
+</nav>

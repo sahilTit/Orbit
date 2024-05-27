@@ -2,7 +2,6 @@
   height: 100%;
   width: 0;
   position: absolute;
-  top: 2.6rem;
   left: 0;
   height: 100%;
   background-color: #fafafa;
@@ -21,7 +20,6 @@
   background: red;
 }
 .sidebar a {
-  /* padding: 8px 8px 8px 32px; */
   text-decoration: none;
   font-size: 25px;
   color: #3b3a3a;
@@ -47,10 +45,7 @@
   justify-content: space-between;
   align-items: center;
   z-index: 999;
-
-  background-color: red;
-  /* background: #b3b6c4; */
-  /* background: red; */
+  margin-bottom: 1rem;
 }
 .secla {
   transition: 0.8s;
@@ -58,8 +53,6 @@
 .openbtn {
   font-size: 15px;
   cursor: pointer;
-  /* background-color: #111; */
-  /* color: white; */
   padding: 10px 15px;
   border: none;
 }
@@ -77,17 +70,12 @@
 #main {
   transition: margin-left 0.5s;
 }
-/* SidePg.css */
 
 .sidebar .active {
   background-color: white; /* or any color you want for the active link */
   color: black;
 }
 
-.tertiary {
-  /* background: #e0e1e9; */
-}
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
   .sidebar {
     padding-top: 15px;

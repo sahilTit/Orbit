@@ -1,0 +1,288 @@
+<div class="container-fluid">
+  <div class="row mb-4">
+    <div class="col-12 shadow">
+      <nav class="pt-2 px-3">
+        <div class="f-s-24 p-t-2 float-left">Role</div>
+
+        <ul class="breadcrumb float-right bg-transparent m-b-1">
+          <li class="breadcrumb-item"><a href="#">Master</a></li>
+
+          <li class="breadcrumb-item active" aria-current="page">Role</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row p-2">
+    <div class="col-10">
+      <form
+        [formGroup]="serachRoleForm"
+        (ngSubmit)="searchRole()"
+        #searchf="ngForm"
+        novalidate
+      >
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input
+                [(ngModel)]="serachRoleData.name"
+                maxlength="30"
+                formControlName="name"
+                type="text"
+                class="form-control f-s-14"
+                placeholder="Enter Role Name"
+              />
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary mr-2 btn-sm">
+                Search</button
+              ><button (click)="resetSearchRole()" class="btn btn-info btn-sm">
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm pull-right"
+        data-toggle="modal"
+        data-target="#addRoleModal"
+        *ngIf="create_btn!=0"
+      >
+        Add Role
+      </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="success_message">
+    <div class="col">
+      <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">
+          &times;
+        </button>
+        <strong>Success!</strong> {{success_message}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="error_message">
+    <div class="col">
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">
+          &times;
+        </button>
+        {{error_message}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="table-responsive">
+        <table
+          class="table table-hover table-bordered table-sm"
+          cellspacing="0"
+          width="100%"
+        >
+          <thead class="thead-light">
+            <tr>
+              <th>Sr. No.</th>
+
+              <th>Role Name</th>
+
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              *ngFor="let Role of RoleList | paginate: { itemsPerPage: 10, currentPage: currentPage , totalItems: totalCat }; let i = index "
+            >
+              <td>{{ (i + 1) + (currentPage - 1) * 10 }}</td>
+
+              <td class="align-middle">
+                {{ Role.IndexRole.role_name | uppercase}}
+              </td>
+
+              <td>
+                <div
+                  [ngClass]="(Role.IndexRole.is_default=='1')?'no-default-btn':'default-btn'"
+                >
+                  <button
+                    (click)="getRoleData( Role.IndexRole.id,i )"
+                    class="btn btn-warning btn-sm mr-1"
+                    *ngIf="edit_btn!=0"
+                  >
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pagination-controls
+        (pageChange)="pageWiseRoleList($event)"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="addRoleModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="data_loading" *ngIf="add_loading">
+        <img src="../../../assets/images/loading.gif" />
+      </div>
+
+      <div class="modal-header">
+        <h4 class="modal-title">Add Role</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <form
+        [formGroup]="addRoleForm"
+        (ngSubmit)="f.form.valid && addRole(f)"
+        #f="ngForm"
+        novalidate
+      >
+        <div class="modal-body">
+          <div
+            class="alert alert-danger alert-dismissible"
+            *ngIf="error_message"
+          >
+            <button type="button" class="close" data-dismiss="alert">
+              &times;
+            </button>
+            <strong>Error !</strong> {{ error_message }}.
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="name"
+                >Role name <span class="text-danger">*</span></label
+              >
+              <input
+                [(ngModel)]="addRoleData.name"
+                formControlName="name"
+                autocomplete="off"
+                type="text"
+                maxlength="30"
+                class="form-control rounded-0"
+                placeholder="Enter Name"
+                [ngClass]="{'is-invalid':(addRoleForm.get('name').touched && addRoleForm.get('name').invalid) || (f.submitted && addRoleForm.get('name').invalid)}"
+              />
+
+              <div
+                class="invalid-feedback"
+                *ngIf="name.invalid && (addRoleForm.get('name').touched && addRoleForm.get('name').invalid) || (f.submitted && addRoleForm.get('name').invalid)"
+              >
+                <div *ngIf="addRoleForm.get('name').errors.required">
+                  Please enter role name
+                </div>
+                <div *ngIf="addRoleForm.get('name').errors.pattern">
+                  Please enter valid role name.
+                </div>
+                <div
+                  *ngIf="!addRoleForm.get('name').errors.required && !addRoleForm.get('name').errors.pattern"
+                >
+                  role already exist.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editRoleModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Role</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <form
+        [formGroup]="editRoleForm"
+        (ngSubmit)="edit_Role.form.valid && editRole(edit_Role)"
+        #edit_Role="ngForm"
+        novalidate
+      >
+        <div class="modal-body">
+          <div
+            class="alert alert-danger alert-dismissible"
+            *ngIf="error_message"
+          >
+            <button type="button" class="close" data-dismiss="alert">
+              &times;
+            </button>
+            <strong>Error !</strong> {{ error_message }}.
+          </div>
+
+          <div class="form-group">
+            <label for="name"> Name:</label>
+            <input
+              [(ngModel)]="editRoleData.id"
+              formControlName="id"
+              type="hidden"
+            />
+
+            <input
+              [(ngModel)]="editRoleData.name"
+              formControlName="name"
+              autocomplete="off"
+              type="text"
+              maxlength="30"
+              class="form-control f-s-14"
+              placeholder="Enter Role Name"
+              [ngClass]="{'is-invalid':(editRoleForm.get('name').touched && editRoleForm.get('name').invalid) || (edit_Role.submitted && editRoleForm.get('name').invalid) }"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="( editRoleForm.get('name').touched && editRoleForm.get('name').invalid || (edit_Role.submitted && editRoleForm.get('name').invalid))"
+            >
+              <div *ngIf="editRoleForm.get('name').errors.required">
+                Please enter role name
+              </div>
+              <div *ngIf="editRoleForm.get('name').errors.pattern">
+                Please enter valid role name.
+              </div>
+              <div
+                *ngIf="!editRoleForm.get('name').errors.required && !editRoleForm.get('name').errors.pattern"
+              >
+                role already exist.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
