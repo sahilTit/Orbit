@@ -22,6 +22,7 @@ import "../src/helper.css";
 import "../src/color.css";
 import "../src/style.css";
 import Maincontain from "./pages/Maincontain.jsx";
+import Expensehead from "./pages/Expensehead.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
           <Route path="table" element={<Table />} />
           <Route path="master" element={<About />} />
           <Route path="main" element={<Maincontain />} />
+          <Route path="expensehead" element={<Expensehead />} />
         </Route>
       </Route>
       <Route path="*" element={<Logt />} />

@@ -4,12 +4,6 @@ const Maincontain = () => {
   //   const [itemsPerPage] = useState(7);
   //   const [user, setUser] = useState([]);
 
-  //   const user = {
-  //     name: "Sahil",
-  //     email: "Sahil",
-  //     password: "123",
-  //     role: "admin",
-  //   };
   //   const filteredData = user.filter((item) =>
   //     item.name.toLowerCase().includes(search.toLowerCase())
   //   );
@@ -39,7 +33,7 @@ const Maincontain = () => {
 
               <ul className="breadcrumb float-right bg-transparent m-b-1">
                 <li className="breadcrumb-item">
-                  <h6>role</h6>
+                  <h6 className="f-s-18">Master</h6>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
                   Role
@@ -49,6 +43,7 @@ const Maincontain = () => {
           </div>
         </div>
       </div>
+
       <div className="container">
         <div className="row p-2">
           <div className="col-10">
@@ -126,19 +121,14 @@ const Maincontain = () => {
                 <thead className="thead-light">
                   <tr>
                     <th>Sr. No.</th>
-
                     <th>Role Name</th>
-
                     <th>Action</th>
                   </tr>
                 </thead>
-
                 <tbody>
                   <tr>
                     <td>Current Page</td>
-
                     <td className="align-middle">UpperCase</td>
-
                     <td>
                       <div>
                         <button className="btn btn-warning btn-sm mr-1">
@@ -154,12 +144,13 @@ const Maincontain = () => {
           </div>
         </div>
       </div>
+
       <div className="modal fade" id="addRoleModal">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-            <div className="data_loading">
+            {/* <div className="data_loading">
               <img src="../../../assets/images/loading.gif" />
-            </div>
+            </div> */}
             <div className="modal-header">
               <h4 className="modal-title">Add Role</h4>
               <button type="button" className="close" data-dismiss="modal">

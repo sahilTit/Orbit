@@ -32,62 +32,64 @@ const About = () => {
 
   return (
     <>
-       <div className="container-fluid  ">
-        <div className="row mb-4">
-          <div className="col-12 shadow">
-            <nav className="pt-2 px-3">
-              <div className="f-s-24 p-t-2 float-left">About</div>
+      <div className="container-fluid  ">
+        <div className="container-fluid  ">
+          <div className="row mb-4">
+            <div className="col-12 shadow">
+              <nav className="pt-2 px-3">
+                <div className="f-s-24 p-t-2 float-left">Master</div>
 
-              <ul className="breadcrumb float-right bg-transparent m-b-1">
-                <li className="breadcrumb-item">
-                  <h6>Home</h6>
-                </li>
-                <li className="breadcrumb-item active" aria-current="page">
-                  About
-                </li>
-              </ul>
-            </nav>
+                <ul className="breadcrumb float-right bg-transparent m-b-1">
+                  <li className="breadcrumb-item">
+                    <h6 className="f-s-18">Master</h6>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    Master
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col mt-3">
-        <table className="table table-hover">
-          <thead className="table-dark fs-6">
-            <tr>
-              <th scope="col">sr.No</th>
-              <th scope="col">Name</th>
-              <th scope="col">Plaza</th>
-              <th scope="col">Email</th>
-              <th scope="col">Mobile</th>
-              {/* <th scope="col">mobile</th> */}
-            </tr>
-          </thead>
-          <tbody className="f-s-15">
-            {currentItems.map((eachData, index) => (
-              <tr key={eachData.email}>
-                <th scope="row">{indexOfFirstItem + index + 1}</th>
-                <td>{eachData.name}</td>
-                <td>{eachData.plaza}</td>
-                <td>{eachData.email}</td>
-                <td>{eachData.mobile}</td>
+        <div className="col mt-3">
+          <table className="table table-hover">
+            <thead className="table-dark fs-6">
+              <tr>
+                <th scope="col">sr.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Plaza</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                {/* <th scope="col">mobile</th> */}
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <nav className="">
-          <ul className="pagination  justify-content-end p-3">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <li key={index + 1} className="page-item">
-                <button
-                  onClick={() => paginate(index + 1)}
-                  className="page-link"
-                >
-                  {index + 1}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
+            </thead>
+            <tbody className="f-s-15">
+              {currentItems.map((eachData, index) => (
+                <tr key={eachData.email}>
+                  <th scope="row">{indexOfFirstItem + index + 1}</th>
+                  <td>{eachData.name}</td>
+                  <td>{eachData.plaza}</td>
+                  <td>{eachData.email}</td>
+                  <td>{eachData.mobile}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <nav className="">
+            <ul className="pagination  justify-content-end p-3">
+              {Array.from({ length: totalPages }, (_, index) => (
+                <li key={index + 1} className="page-item">
+                  <button
+                    onClick={() => paginate(index + 1)}
+                    className="page-link"
+                  >
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </>
   );

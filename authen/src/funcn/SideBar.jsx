@@ -45,20 +45,26 @@ function SideBar() {
             </a>
             <ul className="collapse list-unstyled" id="homeSubmenu">
               <li>
-                <NavLink to="master">
+                <NavLink className="active" to="master">
                   <i className="fa fa-list"></i> Master
                 </NavLink>
               </li>
 
               <li>
-                <NavLink to="table">
+                <NavLink className="active" to="table">
                   <i className="fa fa-list"></i> Table
                 </NavLink>
               </li>
 
               <li>
-                <NavLink to="main">
-                  <i className="fa fa-list"></i> Role{" "}
+                <NavLink className="active" to="main">
+                  <i className="fa fa-list"></i> Role
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink className="active" to="expensehead">
+                  <i className="fa fa-list"></i> Expense Head
                 </NavLink>
               </li>
             </ul>
