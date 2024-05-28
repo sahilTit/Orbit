@@ -11,9 +11,13 @@ const Table = () => {
   const [itemsPerPage] = useState(7);
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
+  const [shown, setShown] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleClose1 = () => setShown(false);
+  const handleShow1 = () => setShown(true);
 
   useEffect(() => {
     const fetchPlazaData = async () => {
@@ -24,6 +28,7 @@ const Table = () => {
         if (response.ok) {
           const data = await response.json();
           setUser(data);
+          // console.log(data)
         } else {
           console.error("Failed to fetch data");
         }
@@ -76,7 +81,7 @@ const Table = () => {
           <div className="row mb-4">
             <div className="col-12 shadow">
               <nav className="pt-2 px-3">
-                <div className="f-s-24 p-t-2 float-left">Table</div>
+                <div className="f-s-24 p-t-2 float-left">Plaza Table</div>
 
                 <ul className="breadcrumb float-right bg-transparent m-b-1">
                   <li className="breadcrumb-item">
@@ -117,7 +122,7 @@ const Table = () => {
               </button>
             </div>
             <div className="col-2">
-              <Button onClick={handleShow}>Add</Button>
+              <Button onClick={handleShow1}>Add</Button>
             </div>
           </div>
           <div className="row mt-3">
@@ -177,13 +182,6 @@ const Table = () => {
                   <Form.Label>Name</Form.Label>
                   <Form.Control type="email" placeholder="name" autoFocus />
                 </Form.Group>
-                {/* <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-                >
-                <Form.Label>Example textarea</Form.Label>
-                <Form.Control as="textarea" rows={3} />
-              </Form.Group> */}
               </Form>
             </Modal.Body>
             <Modal.Footer>
@@ -191,6 +189,30 @@ const Table = () => {
                 Close
               </Button>
               <Button variant="primary" onClick={handleClose}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <Modal show={shown} onHide={handleClose1}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="email" placeholder="name" autoFocus />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose1}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleClose1}>
                 Save Changes
               </Button>
             </Modal.Footer>

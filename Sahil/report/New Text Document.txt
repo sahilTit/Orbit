@@ -1,0 +1,231 @@
+<div class="container-fluid ">
+    
+    <div class="row mb-4 ">
+       
+       <div class="col-12 shadow">
+          
+          <nav class="pt-2 py-2 px-3">
+             
+             <div class="f-s-24 p-t-2 float-left">Purchase Report</div>
+             
+             <ul class="breadcrumb float-right bg-transparent m-b-1">
+                
+                <li class="breadcrumb-item"><a >Stock Report</a></li>
+                
+                <li class="breadcrumb-item active" aria-current="page">Purchase Report</li>
+                
+             </ul>
+             
+          </nav>
+          
+       </div>
+       
+    </div>
+    
+ </div>
+ 
+ <div class="container">
+    
+    <div class="row p-2">
+       
+       <div class="col-12">
+          <form  [formGroup]="searchReportForm" (ngSubmit)="search.form.valid && getReportData()" #search="ngForm" novalidate>
+          <div class="row">
+             
+             <div class="col-sm-2">
+                <span>From Date <span class="text-danger">*</span></span>
+                <div class="form-group"><ng-datepicker [options]="options" [(ngModel)]="serachReportData.from_date" formControlName="from_date" class="f-s-14"></ng-datepicker> </div>
+                
+             </div>
+             
+             <div class="col-sm-2">
+                <span>To Date <span class="text-danger">*</span></span>
+                <div class="form-group"><ng-datepicker [options]="options" [(ngModel)]="serachReportData.to_date" formControlName="to_date" class="f-s-14"></ng-datepicker> </div>
+                
+             </div>
+             
+             <div class="col-sm-2">
+                <span>Supplier</span>
+                <div class="form-group"> <ng-select class="custom border-1" [(ngModel)]="serachReportData.tmp_party_id"  formControlName="tmp_party_id" [items]="partyList" style="height:100%"  >                                  </ng-select></div>
+                
+             </div>
+             
+             <div class="col-sm-4">
+                
+                <div class="form-group mt-3">
+                   <button type="submit" class="btn btn-primary mr-2 btn-sm">Search</button> <button class="btn btn-warning mr-2 btn-sm" (click)="printComponent()">Print</button><select class="btn btn-warning btn-sm p-t-8 p-b-8" (change)="exportTable($event)">
+                   <option value="">Export As</option>
+                   
+                   <option value="xlsx">XLSX</option>
+                   
+                   <option value="xls">XLS</option>
+                   
+                   <option value="png">PNG</option>
+                   <!---<option value="pdf">PDF</option><option value="csv">CSV</option>--->
+                   <option value="txt">TXT</option>
+                   
+                   <option value="json">JSON</option>
+                   
+                   <option value="xml">XML</option>
+                   
+                   <option value="doc">DOC</option>
+                   
+                   <option value="docx">DOCX</option>
+                   </select>
+                </div>
+                
+             </div>
+             
+          </div>
+          </form>
+       </div>
+       
+    </div>
+    
+    <div class="row">
+       
+       <div class="col">
+          
+          <div class="loading" *ngIf="show_loading_image"><img src="../../assets/admin/images/loading.gif"></div>
+          
+          <div class="table-responsive" id="printData">
+             
+             <table  class="table table-hover table-bordered table-sm" cellspacing="0" width="100%" id="exportTable">
+                
+                <thead class="thead-light">
+                   
+                   <tr>
+                      
+                      <th colspan="13" class="text-center border-bottom-0 p-0 m-0">
+                         <h2><b> {{pump_name}}</b> </h2>
+                      </th>
+                      
+                   </tr>
+                   
+                   <tr>
+                      
+                      <th colspan="13" class="text-center border-top-0 border-bottom-0"> {{pump_address}}<br>Phone : {{pump_mobile_no}}</th>
+                      
+                   </tr>
+                   
+                   <tr>
+                      
+                      <th colspan="13" class="text-center border-top-0 border-bottom-0">Purchase Report</th>
+                      
+                   </tr>
+                   
+                   <tr>
+                      
+                      <th colspan="13" class="text-center border-top-0 border-bottom-0"> Date :  {{ serachReportData.from_date | date:'dd-MM-yyyy'}} To {{ serachReportData.to_date | date:'dd-MM-yyyy'}}</th>
+                      
+                   </tr>
+                   
+                   <tr>
+                      
+                      <th>Sr. No</th>
+                      
+                      <th>Date</th>
+                      
+                      <th>Supplier Name</th>
+                      
+                      <th>Inv No</th>
+                      
+                      <th>Pur. Basic</th>
+                      
+                      <th>DLY</th>
+                      
+                      <th>Tax</th>
+                      
+                      <th>CESS</th>
+                      
+                      <th>LFR + SVT</th>
+                      
+                      <th>Disc.</th>
+
+                      <th>TCS</th>
+                      
+                      <th>Round Up</th>
+                      
+                      <th>Total Amount</th>
+                      
+                   </tr>
+                   
+                </thead>
+                <tbody *ngFor="let row of reportData; let i=index; ">
+                <tr (OnCreatedDirective)="getTotal(row.Purchase.tcs_amt ,row.Purchase.total_amount,i)">
+                   
+                   <td><b>{{ i+1 }}</b></td>
+                   
+                   <td><b>{{row.Purchase.purchase_date | date:'dd-MM-yyyy'}}</b></td>
+                   
+                   <td><b>{{row.Ledger.name}}</b></td>
+                   
+                   <td><b>{{row.Purchase.invoice_no}}</b></td>
+                   
+                   <td><b><span *ngIf="row.Purchase.purchase_type==1">{{row.Purchase.net_total-row[0].total_tax | number : '1.2-2' }}</span><span *ngIf="row.Purchase.purchase_type==0">{{row.Purchase.total_amount-row[0].total_gst | number : '1.2-2' }}</span></b></td>
+                   
+                   <td><b>{{row.Purchase.dly}}</b></td>
+                   
+                   <td><b><span *ngIf="row.Purchase.purchase_type==1">{{row.Purchase.vat || 0.00}}</span><span *ngIf="row.Purchase.purchase_type==0">{{row[0].total_gst || 0.00}}</span></b></td>
+                   
+                   <td><b>{{row.Purchase.cess_amount || 0.00}}</b></td>
+                   
+                   <td><b>{{row.Purchase.lfr_svt || 0.00}}</b></td>
+                   
+                   <td><b>{{row.Purchase.discount_amount || 0.00}}</b></td>
+
+                   <td><b>{{row.Purchase.tcs_amt || 0.00}}</b></td>
+                   
+                   <td><b>{{row.Purchase.round_up_amt || 0.00}}</b></td>
+                   
+                   <td><b><span style="float: right;">{{row.Purchase.total_amount || 0.00}}</span></b></td>
+                   
+                </tr>
+                <tr *ngFor="let details of row.PurchasesDetail;">
+                <td></td>
+                
+                <td></td>
+                
+                <td>{{details.Item.name}}</td>
+                
+                <td>{{details.quantity}}</td>
+                
+                <td>{{details.net_amount}}</td>
+                
+                <td>{{details.dly}}</td>
+                
+                <td><span *ngIf="row.Purchase.purchase_type==1">{{details.vat || 0.00}}</span><span *ngIf="row.Purchase.purchase_type==0">{{details.igst_amt || 0.00}}</span></td>
+                
+                <td>{{details.cess_amount || 0.00}}</td>
+                
+                <td>{{details.lfr_svt || 0.00}}</td>
+                
+                <td>{{details.dis_amount || 0.00}}</td>
+
+                <td>{{details.tcs_amt || 0.00}}</td>
+                
+                <td>0.00</td>
+                
+                <td><span style="float: right;">{{details.total_amount}}</span></td>
+                </tr></tbody>
+                <tbody>
+                   
+                   <tr >
+                      
+                      <td colspan="10"><b>Total</b></td>
+                      <td><b>{{ (total_amount_tcs || 0.00)  | parseFloat}}</b></td>
+                      <td colspan="2" ><b><span style="float: right;">{{ total_amount || 0.00}}</span></b></td>
+                      
+                   </tr>
+                   
+                </tbody>
+                
+             </table>
+             
+          </div>
+           
+       </div>
+       
+    </div>
+    
+ </div>

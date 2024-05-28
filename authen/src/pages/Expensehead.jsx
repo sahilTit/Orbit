@@ -12,9 +12,13 @@ const Expensehead = () => {
   const [itemsPerPage] = useState(7);
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
+  const [shown, setShown] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleClose1 = () => setShown(false);
+  const handleShow1 = () => setShown(true);
 
   useEffect(() => {
     const fetchTableData = async () => {
@@ -57,7 +61,6 @@ const Expensehead = () => {
   const handleClear = () => {
     setSearch("");
   };
-
   return (
     <>
       <div className="container-fluid">
@@ -66,7 +69,6 @@ const Expensehead = () => {
             <div className="col-12 shadow">
               <nav className="pt-2 px-3">
                 <div className="f-s-24 p-t-2 float-left">Expense Head</div>
-
                 <ul className="breadcrumb float-right bg-transparent m-b-1">
                   <li className="breadcrumb-item">
                     <h6 className="f-s-18">Master</h6>
@@ -91,11 +93,14 @@ const Expensehead = () => {
               placeholder="Search"
             />
           </div>
-          <div className="col-2">
-            <button className="btn btn-success btn-sm" onClick={handleClear}>
+          <div className="col-7">
+            <button className="btn btn-success " onClick={handleClear}>
               Clear
             </button>
           </div>
+          <button className="btn btn-primary" onClick={handleShow1}>
+            Add
+          </button>
         </div>
         <div className="col ">
           <table className="table table-hover  ">
@@ -115,7 +120,6 @@ const Expensehead = () => {
                     {/* <th scope="row">{eachData.date_rep}</th> */}
                     <td>{eachData.name}</td>
                     <td>
-                      {" "}
                       <Button variant="primary p-1" onClick={handleShow}>
                         <FaRegEdit />
                       </Button>
@@ -147,7 +151,7 @@ const Expensehead = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control type="Name  " placeholder="Name" autoFocus />
             </Form.Group>
             {/* <Form.Group
@@ -164,6 +168,34 @@ const Expensehead = () => {
             Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={shown} onHide={handleClose1}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Name</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="Name  " placeholder="Name" autoFocus />
+            </Form.Group>
+            {/* <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Example textarea</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group> */}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose1}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose1}>
             Save Changes
           </Button>
         </Modal.Footer>

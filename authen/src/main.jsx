@@ -23,6 +23,9 @@ import "../src/color.css";
 import "../src/style.css";
 import Maincontain from "./pages/Maincontain.jsx";
 import Expensehead from "./pages/Expensehead.jsx";
+import Usermster from "./pages/Usermaster.jsx";
+import PlazaTable from "./pages/PlazaTable.jsx";
+import PlazaReport from "./reports/PlazaReport.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +38,9 @@ const router = createBrowserRouter(
           <Route path="master" element={<About />} />
           <Route path="main" element={<Maincontain />} />
           <Route path="expensehead" element={<Expensehead />} />
+          <Route path="usermaster" element={<Usermster />} />
+          <Route path="plazatable" element={<PlazaTable />} />
+          <Route path="plazareport" element={<PlazaReport />} />
         </Route>
       </Route>
       <Route path="*" element={<Logt />} />

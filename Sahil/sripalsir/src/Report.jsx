@@ -207,8 +207,8 @@ const total_sum = {
  }).then(resp => resp.json())
  .then(data => 
   setrows(data.data)
-  // console.log(data.data)
- );
+);
+// console.log(data)
  setshowTable(true);
     // console.log(TABLE_ROWS);
     

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 const About = () => {
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(7);
   useEffect(() => {
     const fetchPlazaData = async () => {
       try {
