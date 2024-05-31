@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Logt.css";
 import { useNavigate } from "react-router-dom";
+import { Login } from "../../context/Apis";
 const Logt = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,14 +10,13 @@ const Logt = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://192.168.1.131/toll_manage/appv1/login", {
+      const res = await fetch(Login, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
-      console.log(res);
 
       const data = await res.json();
       const token = data;
@@ -85,4 +85,3 @@ const Logt = () => {
 };
 
 export default Logt;
-

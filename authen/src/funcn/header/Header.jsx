@@ -1,5 +1,15 @@
 import "./header.css";
-const Header = () => {
+// import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+const Header = ({ toggleNav }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    sessionStorage.removeItem("auth_token");
+    navigate("/");
+  };
+
   return (
     <>
       <div>
@@ -7,7 +17,7 @@ const Header = () => {
           <div className="container-fluid">
             <button
               type="button"
-              // onClick={toggleNav}
+              onClick={toggleNav}
               id="sidebarCollapse"
               className="btn btn-light text-dark"
             >
@@ -22,7 +32,6 @@ const Header = () => {
 
             <li className="nav-item dropdown list-unstyled m-l-7">
               <img
-                src="../../../assets/admin/images/bookingSystem/2.png"
                 alt="user"
                 className="img-fluid rounded-circle mr-auto bg-info dropdown-toggle user_img"
                 data-toggle="dropdown"
@@ -54,7 +63,10 @@ const Header = () => {
                   </a>
 
                   <a className="user_menu">
-                    <li className="list-group-item py-2 pl-3 f-s-14">
+                    <li
+                      className="list-group-item py-2 pl-3 f-s-14"
+                      onClick={handleLogout}
+                    >
                       <i className="fa fa-power-off mr-2"></i>Sign-out
                     </li>
                   </a>

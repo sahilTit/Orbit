@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -6,9 +6,10 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 // import { data } from "jquery";
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import { DataContext } from "../context/DataContext";
 
 const Usermaster = () => {
-  const [user, setUser] = useState([]);
+  // const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [search, setSearch] = useState("");
@@ -18,30 +19,13 @@ const Usermaster = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  useEffect(() => {
-    const fetchPlazaData = async () => {
-      try {
-        const response = await fetch(
-          "http://192.168.1.131/toll_manage/appv1/manage_user"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data.data);
-          // console.log(data.data);
-        } else {
-          console.error("Failed to fetch data");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchPlazaData();
-  }, []);
+  const { data2 } = useContext(DataContext);
 
-  
+  // console.log(data2);
+
   // const res = fetch("http://192.168.1.131/toll_manage/appv1/get_plaza");
 
-  const filteredData = user.filter((item) =>
+  const filteredData =data2 && data2.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -50,7 +34,7 @@ const Usermaster = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const totalPages = Math.ceil(user.length / itemsPerPage);
+  const totalPages = Math.ceil(data2.length / itemsPerPage);
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -68,14 +52,14 @@ const Usermaster = () => {
           <div className="row mb-4">
             <div className="col-12 shadow">
               <nav className="pt-2 px-3">
-                <div className="f-s-24 p-t-2 float-left">User Master</div>
+                <div className="f-s-24 p-t-2 float-left">Plaza Master</div>
 
                 <ul className="breadcrumb float-right bg-transparent m-b-1">
                   <li className="breadcrumb-item">
                     <h6 className="f-s-18">Master</h6>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    Master
+                    Plaza
                   </li>
                 </ul>
               </nav>
@@ -108,22 +92,23 @@ const Usermaster = () => {
             <thead className="table-dark fs-6">
               <tr>
                 <th scope="col">sr.No</th>
-                <th scope="col">User Name </th>
-                <th scope="col">Plaza Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Mobile</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Contract Amount</th>
+                <th scope="col">Remitance</th>
+                <th scope="col">Opening Amount </th>
                 <th scope="col">Actions</th>
-                {/* <th scope="col">mobile</th> */}
               </tr>
             </thead>
             <tbody className="f-s-15">
-              {currentItems.map((eachData, index) => (
-                <tr key={eachData.email}>
+              {currentItems && currentItems.map((eachData, index) => (
+                <tr key={eachData.addr}>
                   <th scope="row">{indexOfFirstItem + index + 1}</th>
                   <td>{eachData.name}</td>
-                  <td>{eachData.plaza}</td>
-                  <td>{eachData.email}</td>
-                  <td>{eachData.mobile}</td>
+                  <td>{eachData.addr}</td>
+                  <td>{eachData.contract}</td>
+                  <td>{eachData.remitance}</td>
+                  <td>{eachData.opn_amt}</td>
                   <td>
                     <MdDeleteForever
                       style={{ color: "red" }}
@@ -132,7 +117,7 @@ const Usermaster = () => {
                     /{" "}
                     <FaRegEdit
                       style={{ color: "green" }}
-                      // onClick={console.log("Edit")}
+                      //   onClick={console.log("Edit")}
                     />
                   </td>
                 </tr>
@@ -157,50 +142,43 @@ const Usermaster = () => {
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Name</Modal.Title>
+          <Modal.Title>Add Plaza</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Valid From</Form.Label>
+              <Form.Control type="date" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Valid To</Form.Label>
+              <Form.Control type="date" />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control type="Name  " placeholder="Name" autoFocus />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Mobile Number</Form.Label>
-              <Form.Control type="number" placeholder="Mobile Number" />
+              <Form.Label>Address</Form.Label>
+              <Form.Control type="Address" placeholder="Address" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label> Email</Form.Label>
-              <Form.Control type="email" placeholder="Email" />
+              <Form.Label> Remitance</Form.Label>
+              <Form.Control type="Remitance" placeholder="Remitance" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label> Contract Amount</Form.Label>
+              <Form.Control type="Remitance" placeholder="Remitance" />
             </Form.Group>
 
             <FloatingLabel className="mb-3 " controlId="floatingSelect">
+              <Form.Label> Plaza Type</Form.Label>
               <select className="custom-select" id="inputGroupSelect01">
-                <option selected>Select Role</option>
-                <option value="1">Toll Operator</option>
-                <option value="2">Accounts Reports</option>
-                <option value="3">Supervisor</option>
-                <option value="4">Admin</option>
+                <option selected>Select Type</option>
+                <option value="1">Regular Plaza</option>
+                <option value="2">Limited Plaza</option>
               </select>
             </FloatingLabel>
-
-            <FloatingLabel className="mb-3 " controlId="floatingSelect">
-              <select className="custom-select" id="inputGroupSelect01">
-                <option selected>Select Plaza</option>
-                {user.map((eachData) => (
-                  <option key={eachData.id} value={eachData.id}>
-                    {eachData.plaza}
-                  </option>
-                ))}
-              </select>
-            </FloatingLabel>
-            <Form.Group
-              className="mb-3"
-              //   controlId="exampleForm.ControlPassword"
-            >
-              <Form.Label> Password</Form.Label>
-              <Form.Control type="password" placeholder="password" />
-            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>

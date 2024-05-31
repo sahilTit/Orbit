@@ -1,4 +1,4 @@
-import Logt from "./pages/Logt";
+import Logt from "./pages/loginpage/Logt";
 
 import "./App.css";
 

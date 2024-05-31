@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext,  useState } from "react";
 import * as XLSX from "xlsx/xlsx.mjs";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { FaRegEdit } from "react-icons/fa";
+import { DataContext } from "../../context/DataContext";
 
 const Table = () => {
-  const [user, setUser] = useState([]);
+  // const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(7);
+  const [itemsPerPage] = useState(10);
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const [shown, setShown] = useState(false);
@@ -18,35 +19,16 @@ const Table = () => {
 
   const handleClose1 = () => setShown(false);
   const handleShow1 = () => setShown(true);
-
-  useEffect(() => {
-    const fetchPlazaData = async () => {
-      try {
-        const response = await fetch(
-          "http://192.168.1.131/toll_manage/appv1/get_plaza"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data);
-          // console.log(data)
-        } else {
-          console.error("Failed to fetch data");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchPlazaData();
-  }, []);
+  const { data4 } = useContext(DataContext);
 
   const downloadExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(
-      user.map((eachData, index) => ({
-        "sr.No": index + 1,
-        "Plaza id": eachData.plaza_id,
-        name: eachData.name,
-      }))
+      data4 &&
+        data4.map((eachData, index) => ({
+          "sr.No": index + 1,
+          "Plaza id": eachData.plaza_id,
+          name: eachData.name,
+        }))
     );
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Plaza Data");
@@ -55,9 +37,11 @@ const Table = () => {
     XLSX.writeFile(workbook, "PlazaData.xlsx");
   };
 
-  const filteredData = user.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredData =
+    data4 &&
+    data4.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -137,20 +121,21 @@ const Table = () => {
                   </tr>
                 </thead>
                 <tbody className="f-s-15">
-                  {currentItems.map((eachData, index) => (
-                    <tr key={eachData.plaza_id}>
-                      <th scope="row">{indexOfFirstItem + index + 1}</th>
-                      <th scope="row">{eachData.plaza_id}</th>
-                      <td>{eachData.name}</td>
-                      <td>
-                        <div className="">
-                          <Button variant="primary p-1" onClick={handleShow}>
-                            <FaRegEdit />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {currentItems &&
+                    currentItems.map((eachData, index) => (
+                      <tr key={eachData.plaza_id}>
+                        <th scope="row">{indexOfFirstItem + index + 1}</th>
+                        <th scope="row">{eachData.plaza_id}</th>
+                        <td>{eachData.name}</td>
+                        <td>
+                          <div className="">
+                            <Button variant="primary p-1" onClick={handleShow}>
+                              <FaRegEdit />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

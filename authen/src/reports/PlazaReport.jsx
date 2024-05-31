@@ -1,32 +1,31 @@
-import { useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import { DataContext } from "../context/DataContext";
+import "./PlazaReport.css";
+// import SearchSelectedInput from "../pages/role/SearchSelectInput";
+import SearchableSelect from "../pages/role/SearchSelectInput";
 const PlazaReport = () => {
-  const [data, setData] = useState("");
+  const { handlePostRequest, postData, setDay, setDay1 } =
+    useContext(DataContext);
+
+  // State for date inputs
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  useEffect(() => {
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split("T")[0];
+    setFromDate(today);
+    setToDate(today);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        "http://192.168.1.131/toll_manage/appv1/generate_report",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            from: "2024-02-01",
-            plaza_code: "20",
-            to: "2024-02-01",
-          }),
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setData(data);
-        console.log(data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+
+    setDay(fromDate);
+    setFromDate(toDate);
+    handlePostRequest();
   };
-  console.log(data);
+
   return (
     <>
       <div className="container-fluid ">
@@ -49,7 +48,7 @@ const PlazaReport = () => {
         </div>
       </div>
 
-      <div className="container">
+      <div className="">
         <div className="row p-2">
           <div className="col-12">
             <form>
@@ -59,7 +58,15 @@ const PlazaReport = () => {
                     From Date <span className="text-danger">*</span>
                   </span>
                   <div className="form-group">
-                    <input type="date" className="form-control" />
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={fromDate}
+                      onChange={(e) => {
+                        setFromDate(e.target.value);
+                        setDay(e.target.value);
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -67,18 +74,23 @@ const PlazaReport = () => {
                   <span>
                     To Date <span className="text-danger">*</span>
                   </span>
-                  <div className="form-group ">
-                    <input type="date" className="form-control" />
+                  <div className="form-group">
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={toDate}
+                      onChange={(e) => {
+                        setToDate(e.target.value);
+                        setDay1(e.target.value);
+                      }}
+                    />
                   </div>
                 </div>
 
                 <div className="col-sm-2">
                   <span>Plaza</span>
                   <div className="form-group">
-                    <select className="form-select form-control" name="" id="">
-                      <option value="1">Select Plaza</option>
-                      <option value="2">1april</option>
-                    </select>
+                    <SearchableSelect />
                   </div>
                 </div>
 
@@ -96,21 +108,13 @@ const PlazaReport = () => {
                     </button>
                     <select className="btn btn-warning btn-sm p-t-8 p-b-8">
                       <option value="">Export As</option>
-
                       <option value="xlsx">XLSX</option>
-
                       <option value="xls">XLS</option>
-
                       <option value="png">PNG</option>
-                      {/* <!---<option value="pdf">PDF</option><option value="csv">CSV</option>---> */}
                       <option value="txt">TXT</option>
-
                       <option value="json">JSON</option>
-
                       <option value="xml">XML</option>
-
                       <option value="doc">DOC</option>
-
                       <option value="docx">DOCX</option>
                     </select>
                   </div>
@@ -120,11 +124,11 @@ const PlazaReport = () => {
           </div>
         </div>
 
-        <div className="row">
+        <div className="row p-20">
           <div className="col">
-            <div className="table-responsive" id="printData">
+            <div className="" id="printData">
               <table
-                className="table table-hover table-bordered table-sm"
+                className="table table-responsive table-hover table-bordered table-sm"
                 cellSpacing="0"
                 width="100%"
                 id="exportTable"
@@ -132,170 +136,110 @@ const PlazaReport = () => {
                 <thead className="thead-light">
                   <tr>
                     <th
-                      colSpan="13"
-                      className="text-center border-bottom-0 p-0 m-0"
-                    >
-                      <h2>
-                        <b> pump</b>{" "}
-                      </h2>
-                    </th>
-                  </tr>
-
-                  <tr>
-                    <th
-                      colSpan="13"
+                      colSpan="22"
                       className="text-center border-top-0 border-bottom-0"
                     >
-                      {" "}
-                      Pump
-                      <br />
-                      Phone : Pump
-                    </th>
-                  </tr>
-
-                  <tr>
-                    <th
-                      colSpan="13"
-                      className="text-center border-top-0 border-bottom-0"
-                    >
-                      Purchase Report
-                    </th>
-                  </tr>
-
-                  <tr>
-                    <th
-                      colSpan="13"
-                      className="text-center border-top-0 border-bottom-0"
-                    >
-                      {" "}
                       Date : To Date
                     </th>
                   </tr>
 
                   <tr>
                     <th>Sr. No</th>
-
                     <th>Date</th>
-
-                    <th>Supplier Name</th>
-
-                    <th>Inv No</th>
-
-                    <th>Pur. Basic</th>
-
-                    <th>DLY</th>
-
-                    <th>Tax</th>
-
-                    <th>CESS</th>
-
-                    <th>LFR + SVT</th>
-
-                    <th>Disc.</th>
-
-                    <th>TCS</th>
-
-                    <th>Round Up</th>
-
-                    <th>Total Amount</th>
+                    <th>OPENING AMOUNT</th>
+                    <th>ADVANCE FROM H.O</th>
+                    <th>CASH 1</th>
+                    <th>CASH 2</th>
+                    <th>MONTHLY PASS AMOUN</th>
+                    <th>ONLINE MONTHLY PASS AMOUNT</th>
+                    <th>GROSS CASH RECEIVABLE FROM TOLL PLAZA</th>
+                    <th>
+                      TOTAL CASH RECEIVED FROM TC INCLUDING BALAJI CASH RECEIPTS
+                    </th>
+                    <th>TOTAL RECEPTS FROM TC</th>
+                    <th>SHORT/EXCESS COLLECTION FROM TC</th>
+                    <th>CASH DEPOSITED DIRECTLY TO BANK</th>
+                    <th>CASH DEPOSITED IN ARCPL OFFICE</th>
+                    <th>TOTAL EXPENSES</th>
+                    <th>SALARY</th>
+                    <th>DIFFERENCE CASH IN TOLL PLAZA</th>
+                    <th>TOTAL FAST TAG COLLECTION</th>
+                    <th>TOTAL COLLECTION</th>
+                    <th>OPERATOR</th>
+                    <th>ACTIONS</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      <b>1</b>
-                    </td>
-
-                    <td>
-                      <b>Date</b>
-                    </td>
-
-                    <td>
-                      <b>Name</b>
-                    </td>
-
-                    <td>
-                      <b>Purchase</b>
-                    </td>
-
-                    <td>
-                      <b>
-                        <span>1 2 3</span>
-                        <span>123</span>
-                      </b>
-                    </td>
-
-                    <td>
-                      <b>Dly</b>
-                    </td>
-
-                    <td>
-                      <b>
-                        <span>Row</span>
-                        <span>Row</span>
-                      </b>
-                    </td>
-
-                    <td>
-                      <b>Cess</b>
-                    </td>
-
-                    <td>
-                      <b>Pur</b>
-                    </td>
-
-                    <td>
-                      <b>Row</b>
-                    </td>
-
-                    <td>
-                      <b>T</b>
-                    </td>
-
-                    <td>
-                      <b>R</b>
-                    </td>
-
-                    <td>
-                      <b>
-                        <span style={{ float: "right" }}>0</span>
-                      </b>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-
-                    <td></td>
-
-                    <td>Name</td>
-
-                    <td>Quantity</td>
-
-                    <td>Amount</td>
-
-                    <td>Detail</td>
-
-                    <td>
-                      <span>vat</span>
-                      <span>Amt</span>
-                    </td>
-
-                    <td>0</td>
-
-                    <td>0</td>
-
-                    <td>7</td>
-
-                    <td>0</td>
-
-                    <td>0.00</td>
-
-                    <td>
-                      <span style={{ float: "right" }}>Am</span>
-                    </td>
-                  </tr>
+                  {postData.data &&
+                    postData.data.map((eachData, index) => (
+                      <tr key={eachData.id}>
+                        <td>
+                          <b>{index + 1}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.date_rep}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.initial_opn}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.adv_from_ho}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.total_cash_recievable}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.balaji}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.monthly_pass_amt}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.cash_dep_bank}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.total_cash}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.total_cash}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.total_cash}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.short_excess_tc}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.cash_dep_bank}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.cash_dep_arcpl}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.cash_kpt}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.salary}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.diff_reciev}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.total_fast_tag_cl}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.total_coll}</b>
+                        </td>
+                        <td>
+                          <b>{eachData.operator}</b>
+                        </td>
+                        <td>
+                          <b>edit</b>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
-                <tbody>
+                {/* <tbody>
                   <tr>
                     <td colSpan="10">
                       <b>Total</b>
@@ -309,7 +253,7 @@ const PlazaReport = () => {
                       </b>
                     </td>
                   </tr>
-                </tbody>
+                </tbody> */}
               </table>
             </div>
           </div>

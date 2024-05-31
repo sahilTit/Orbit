@@ -8,24 +8,20 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import "./index.css";
-import Homepage from "./pages/Homepage.jsx";
-import About from "./pages/About.jsx";
-import Logt from "./pages/Logt.jsx";
-import Table from "./pages/Table.jsx";
-import Layout from "./MainLayout.jsx";
+import Homepage from "./pages/homepage/Homepage.jsx";
+import About from "./pages/about/About.jsx";
+import Logt from "./pages/loginpage/Logt.jsx";
+import Table from "./pages/plaza-table/Table.jsx";
+import Layout from "./layout/MainLayout.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ProtectedRoute from "./pages/ProtectedRoute.jsx";
-// import Paginated from "./pages/Paginated.jsx";
-import Toast from "./pages/Toast.jsx";
-import "../src/SidebarMenu.js";
-import "../src/helper.css";
-import "../src/color.css";
-import "../src/style.css";
-import Maincontain from "./pages/Maincontain.jsx";
-import Expensehead from "./pages/Expensehead.jsx";
-import Usermster from "./pages/Usermaster.jsx";
-import PlazaTable from "./pages/PlazaTable.jsx";
+import ProtectedRoute from "./protected/ProtectedRoute.jsx";
+import Toast from "./pages/index-page/Toast.jsx";
+import Maincontain from "./pages/role/Role.jsx";
+import Expensehead from "./Master/Expensehead.jsx";
+import Usermster from "./Master/Usermaster.jsx";
+import PlazaTable from "./Master/PlazaTable.jsx";
 import PlazaReport from "./reports/PlazaReport.jsx";
+import DataProvider from "./context/DataContext";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,15 +40,16 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       <Route path="*" element={<Logt />} />
-      {/* <Route path="/" element={<SecLayout />}></Route> */}
     </Route>
   )
 );
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
+    <DataProvider>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+    </DataProvider>
   </React.StrictMode>
 );
-// 9347409293;

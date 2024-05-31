@@ -38,14 +38,14 @@ const Toast = () => {
   //   })
   // );
   const array = ions.map((each) => parseFloat(each.total_collection));
-  console.log(array);
+  // console.log(array);
   const initialValue = 0;
   const sumWithInitial = array.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     initialValue
   );
 
-  console.log(sumWithInitial);
+  // console.log(sumWithInitial);
   // console.log(ions.map((each) => each.total_collection));
   // console.log(ions[0]);
 

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SidePg.css";
-import SecLayout from "../SecLayout";
-import SideBar from "../funcn/SideBar";
+import SecLayout from "../../layout/SecLayout";
+import SideBar from "../../funcn/sidebar/SideBar";
+import Header from "../../funcn/header/Header";
 
 const SidePg = () => {
   const [sidebarWidth, setSidebarWidth] = useState("0");
@@ -38,26 +39,17 @@ const SidePg = () => {
   return (
     <>
       <div className="cont">
-        <div id="mySidebar" className="sidebar" style={{ width: sidebarWidth }}>
-          {/* <Header></Header> */}
+        <div id="sidebar" className="sidebar">
           <SideBar sidebarWidth={sidebarWidth}></SideBar>
         </div>
       </div>
+      <Header handleLogout={handleLogout}></Header>
       <div id="main">
+        <Header toggleNav={toggleNav}></Header>
         <div
-          className="header navbar fieldset  bg-info1    "
-          style={{ backgroundColor: "#009688" }}
+          className="secla"
+          style={{ marginLeft: marginLeft, marginTop: "5%" }}
         >
-          <button className="openbtn btn-light " onClick={toggleNav}>
-            ☰
-          </button>
-          <div>
-            <button className="bg-danger lgotbtn" onClick={handleLogout}>
-              LogoOut
-            </button>
-          </div>
-        </div>
-        <div className="secla" style={{ marginLeft: marginLeft }}>
           <SecLayout />
         </div>
       </div>

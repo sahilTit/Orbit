@@ -1,32 +1,15 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
-function SideBar() {
-  const [sidebarWidth, setSidebarWidth] = useState("0");
-  const [marginLeft, setMarginLeft] = useState("0");
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-
-  const openNav = () => {
-    setSidebarWidth("250px");
-    setMarginLeft("250px");
-  };
-
-  const closeNav = () => {
-    setSidebarWidth("0");
-    setMarginLeft("0");
-  };
-  const toggleNav = () => {
-    if (isSideBarOpen) {
-      openNav();
-    } else {
-      closeNav();
-    }
-    setIsSideBarOpen(!isSideBarOpen);
-  };
+function SideBar({ sidebarWidth }) {
+  // const [marginLeft, setMarginLeft] = useState("0");
+  // const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   return (
     <>
-      <nav id="sidebar" style={{ sidebarWidth: sidebarWidth }}>
-        <ul className="list-unstyled components pt-0">
+      <nav className="sidebar" style={{ width: sidebarWidth }}>
+        <ul
+          className="list-unstyled components pt-0"
+          // style={{ width: sidebarWidth }}
+        >
           <li>
             <NavLink to="/home">
               {/* <a></a> */}

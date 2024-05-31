@@ -1,12 +1,13 @@
 // hoexpense_report
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import { FaRegEdit } from "react-icons/fa";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import { DataContext } from "../context/DataContext";
 
 const Expensehead = () => {
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(7);
@@ -20,30 +21,11 @@ const Expensehead = () => {
   const handleClose1 = () => setShown(false);
   const handleShow1 = () => setShown(true);
 
-  useEffect(() => {
-    const fetchTableData = async () => {
-      try {
-        const response = await fetch(
-          "http://192.168.1.131/toll_manage/appv1/hoexpense_report"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data);
-          console.log(data[0]);
-        } else {
-          console.error("failed to fetch");
-        }
-      } catch (error) {
-        console.log("Error Fetching Data", error);
-      }
-    };
-    fetchTableData();
-  }, []);
-  //   fetchTableData();
+  const { data1 } = useContext(DataContext);
 
   const filteredData =
-    user &&
-    user.filter((item) =>
+    data1 &&
+    data1.filter((item) =>
       item.name.toLowerCase().includes(search.toLowerCase())
     );
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -154,13 +136,6 @@ const Expensehead = () => {
               <Form.Label>Name</Form.Label>
               <Form.Control type="Name  " placeholder="Name" autoFocus />
             </Form.Group>
-            {/* <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -182,13 +157,6 @@ const Expensehead = () => {
               <Form.Label>Name</Form.Label>
               <Form.Control type="Name  " placeholder="Name" autoFocus />
             </Form.Group>
-            {/* <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>
