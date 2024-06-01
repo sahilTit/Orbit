@@ -84,6 +84,21 @@ function SideBar({ sidebarWidth }) {
                   <i className="fa fa-list"></i>Plaza Report
                 </NavLink>
               </li>
+              <li>
+                <NavLink className="active" to="consreport">
+                  <i className="fa fa-list"></i>Consolid Report
+                </NavLink>
+              </li>
+              <li>
+                <NavLink className="active" to="consreport-2">
+                  <i className="fa fa-list"></i>Consolid Report 2
+                </NavLink>
+              </li>
+              <li>
+                <NavLink className="active" to="horeport">
+                  <i className="fa fa-list"></i>HO Report
+                </NavLink>
+              </li>
             </ul>
           </li>
         </ul>

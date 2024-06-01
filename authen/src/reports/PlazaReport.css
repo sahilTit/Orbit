@@ -1,16 +1,4 @@
-/* Custom CSS for sticky header */
-.table-responsive {
-  overflow-x: scroll;
-}
-
 thead th {
   position: sticky;
-  top: 0;
-  /* background: #f8f9fa; */
-  /* z-index: 12; */
-}
-
-/* Optional: Style the table for better readability */
-.table-hover tbody tr:hover {
-  /* background-color: #f1f1f1; */
+  top: 7%;
 }

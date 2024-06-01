@@ -21,7 +21,10 @@ import Expensehead from "./Master/Expensehead.jsx";
 import Usermster from "./Master/Usermaster.jsx";
 import PlazaTable from "./Master/PlazaTable.jsx";
 import PlazaReport from "./reports/PlazaReport.jsx";
+import ConsolidateReport from "./reports/ConsolidateReport.jsx";
+import ConsolidateReportSec from "./reports/ConsolidateRepoSec.jsx";
 import DataProvider from "./context/DataContext";
+import HoExpense from "./reports/HoExpense.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +40,9 @@ const router = createBrowserRouter(
           <Route path="usermaster" element={<Usermster />} />
           <Route path="plazatable" element={<PlazaTable />} />
           <Route path="plazareport" element={<PlazaReport />} />
+          <Route path="consreport" element={<ConsolidateReport />} />
+          <Route path="consreport-2" element={<ConsolidateReportSec />} />
+          <Route path="horeport" element={<HoExpense />} />
         </Route>
       </Route>
       <Route path="*" element={<Logt />} />

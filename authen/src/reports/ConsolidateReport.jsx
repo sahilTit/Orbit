@@ -2,26 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import "./PlazaReport.css";
 // import SearchSelectedInput from "../pages/role/SearchSelectInput";
-import SearchableSelect from "../pages/role/SearchSelectInput";
 import "react-datepicker/dist/react-datepicker.css";
 // import DatePicker from "react-datepicker";
 
 const PlazaReport = () => {
-  const { handlePostRequest, postData, setDay, setDay1, data3 } =
+  const { handlePostRequest1, postData1, setDayCons, setDayCons1 } =
     useContext(DataContext);
 
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleSelectChange = (option) => {
-    setSelectedOption(option);
-  };
-
-  let plazaOption = data3
-    ? data3.map((eachData) => ({
-        label: eachData.plaza,
-        value: eachData.plaza_id,
-      }))
-    : [];
+  console.log(postData1);
   // State for date inputs
   // const [startdate, setStartDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
@@ -33,33 +21,33 @@ const PlazaReport = () => {
     const today = new Date().toISOString().split("T")[0];
     setFromDate(today);
     setToDate(today);
-    setDay(today);
-    setDay1(today);
-  }, [setDay, setDay1]);
+    setDayCons(today);
+    setDayCons1(today);
+  }, [setDayCons, setDayCons1]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setDay(fromDate);
-    setDay1(toDate);
-    handlePostRequest();
+    setDayCons(fromDate);
+    setDayCons1(toDate);
+    handlePostRequest1();
   };
-
+  console.log(postData1)
   return (
     <>
       <div className="container-fluid ">
         <div className="row mb-4 ">
           <div className="col-12 shadow">
             <nav className="pt-2 py-2 px-3">
-              <div className="f-s-24 p-t-2 float-left">Plaza Report</div>
+              <div className="f-s-24 p-t-2 float-left">Consolidate Report I</div>
 
               <ul className="breadcrumb float-right bg-transparent m-b-1">
                 <li className="breadcrumb-item">
-                  <a> Reports</a>
+                  <a> Report</a>
                 </li>
 
                 <li className="breadcrumb-item active" aria-current="page">
-                  Plaza Report
+                  Consolidate Report
                 </li>
               </ul>
             </nav>
@@ -91,7 +79,7 @@ const PlazaReport = () => {
                       value={fromDate}
                       onChange={(e) => {
                         // setFromDate();
-                        setDay(e.target.value);
+                        setDayCons(e.target.value);
                       }}
                     />
                   </div>
@@ -108,19 +96,8 @@ const PlazaReport = () => {
                       value={toDate}
                       onChange={(e) => {
                         // setToDate();
-                        setDay1(e.target.value);
+                        setDayCons1(e.target.value);
                       }}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-sm-2">
-                  <span>Plaza</span>
-                  <div className="form-group">
-                    <SearchableSelect
-                      options={plazaOption}
-                      value={selectedOption}
-                      onChange={handleSelectChange}
                     />
                   </div>
                 </div>
@@ -157,7 +134,7 @@ const PlazaReport = () => {
 
         <div className="row p-20">
           <div className="col">
-            <div className="table-responsive" id="printData">
+            <div className="" id="printData">
               <table
                 className="table responsive table-hover table-bordered table-sm"
                 cellSpacing="3"
@@ -169,7 +146,7 @@ const PlazaReport = () => {
                       colSpan="22"
                       className="text-center border-top-0 border-bottom-0"
                     >
-                      {fromDate} : To {toDate}
+                      {postData1[0].date_rep} : To {setDayCons1}
                     </th>
                   </tr> */}
 
@@ -182,45 +159,35 @@ const PlazaReport = () => {
                     <th>MONTHLY PASS AMOUN</th>
                     <th>ONLINE MONTHLY PASS AMOUNT</th>
                     <th>GROSS CASH RECEIVABLE FROM TOLL PLAZA</th>
-                    <th>
-                      TOTAL CASH RECEIVED FROM TC INCLUDING BALAJI CASH RECEIPTS
-                    </th>
-                    <th>TOTAL RECEPTS FROM TC</th>
-                    <th>SHORT / EXCESS COLLECTION FROM TC</th>
-                    <th>CASH DEPOSITED DIRECTLY TO BANK</th>
-                    <th>CASH DEPOSITED IN ARCPL OFFICE</th>
-                    <th>TOTAL EXPENSES</th>
-                    <th>SALARY</th>
-                    <th>DIFFERENCE CASH IN TOLL PLAZA</th>
-                    <th>TOTAL FAST TAG COLLECTION</th>
-                    <th>TOTAL COLLECTION</th>
+                    <th>m-1</th>
+                    <th>m-2</th>
                     <th>OPERATOR</th>
                     <th>ACTIONS</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {postData.data &&
-                    postData.data.map((eachData) => (
+                  {postData1 &&
+                    postData1.map((eachData) => (
                       <tr key={eachData.id}>
                         <td>{eachData.date_rep}</td>
                         <td>{eachData.initial_opn}</td>
-                        <td>{eachData.adv_from_ho}</td>
-                        <td>{eachData.total_cash_recievable}</td>
-                        <td>{eachData.balaji}</td>
-                        <td>{eachData.monthly_pass_amt}</td>
-                        <td>{eachData.cash_dep_bank}</td>
-                        <td>{eachData.total_cash}</td>
-                        <td>{eachData.total_cash}</td>
-                        <td>{eachData.total_cash}</td>
-                        <td>{eachData.short_excess_tc}</td>
-                        <td>{eachData.cash_dep_bank}</td>
-                        <td>{eachData.cash_dep_arcpl}</td>
+                        <td>{eachData.cash_1}</td>
+                        <td>{eachData.cash_2}</td>
+                        <td>{eachData.monthly_pass_amount}</td>
+                        <td>{eachData.gross_cash_rec}</td>
+                        <td>{eachData.total_coll}</td>
+                        <td>{eachData.total_coll}</td>
+                        <td>{eachData.total_expense_from_ho}</td>
+                        <td>{eachData.expense_from_tp}</td>
+                        <td>{eachData.total_fast_tag_cl}</td>
+                        {/* <td>{eachData.}</td> */}
+                        {/* <td>{eachData.cash_dep_arcpl}</td>
                         <td>{eachData.cash_kpt}</td>
                         <td>{eachData.salary}</td>
                         <td>{eachData.diff_reciev}</td>
                         <td>{eachData.total_fast_tag_cl}</td>
                         <td>{eachData.total_coll}</td>
-                        <td>{eachData.operator}</td>
+                        <td>{eachData.operator}</td> */}
                         <td>edit</td>
                       </tr>
                     ))}

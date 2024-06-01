@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import PropTypes from "prop-types";
-import { Api1, Api2, Api3, Api4, Api5 } from "./Apis";
+import { Api1, Api2, Api3, Api4, Api5, Api6 } from "./Apis";
 
 export const DataContext = createContext();
 
@@ -16,11 +16,15 @@ const DataProvider = ({ children }) => {
   const [data3, setData3] = useState("");
   const [data4, setData4] = useState("");
 
+  const [dayCons, setDayCons] = useState("");
+  const [dayCons1, setDayCons1] = useState("");
+
   const [day, setDay] = useState("");
   const [day1, setDay1] = useState("");
   const [code, setCode] = useState("");
 
   const [postData, setPostData] = useState("");
+  const [postData1, setPostData1] = useState("");
 
   useEffect(() => {
     // Fetch data from multiple APIs
@@ -71,8 +75,7 @@ const DataProvider = ({ children }) => {
 
     const fetchData4 = async () => {
       try {
-        const response = await fetch(Api5
-        );
+        const response = await fetch(Api5);
         if (response.ok) {
           const data = await response.json();
           setData4(data);
@@ -111,10 +114,32 @@ const DataProvider = ({ children }) => {
     }
   }, [day, code, day1]);
 
+  const handlePostRequest1 = useCallback(async () => {
+    try {
+      const response = await fetch(Api6, {
+        method: "POST",
+        body: JSON.stringify({
+          from: dayCons,
+          plaza_code: "",
+          to: dayCons1,
+        }),
+      });
+      if (response.ok) {
+        const result2 = await response.json();
+        setPostData1(result2);
+        console.log(result2);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dayCons, dayCons1]);
+
   const contextValue = useMemo(
     () => ({
       handlePostRequest,
+      handlePostRequest1,
       postData,
+      postData1,
       data1,
       data2,
       data3,
@@ -122,10 +147,16 @@ const DataProvider = ({ children }) => {
       setCode,
       setDay,
       setDay1,
+      setDayCons1,
+      setDayCons,
+      setPostData,
+      setPostData1,
     }),
     [
       handlePostRequest,
+      handlePostRequest1,
       postData,
+      postData1,
       data1,
       data2,
       data3,
@@ -133,6 +164,10 @@ const DataProvider = ({ children }) => {
       setCode,
       setDay,
       setDay1,
+      setDayCons1,
+      setDayCons,
+      setPostData,
+      setPostData1,
     ]
   );
 
