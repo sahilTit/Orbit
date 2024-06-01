@@ -7,13 +7,14 @@ import "react-datepicker/dist/react-datepicker.css";
 // import DatePicker from "react-datepicker";
 
 const PlazaReport = () => {
-  const { handlePostRequest, postData, setDay, setDay1, data3 } =
+  const { handlePostRequest, postData, setDay, setDay1, data3, setCode } =
     useContext(DataContext);
 
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelectChange = (option) => {
     setSelectedOption(option);
+    setCode(option ? option.value : null);
   };
 
   let plazaOption = data3
@@ -250,3 +251,16 @@ const PlazaReport = () => {
 };
 
 export default PlazaReport;
+
+
+// {
+//   "plaza_code": "20",
+//   "to": "2024-06-01",
+//   "from": "2024-02-01"
+// }
+
+// {
+//   "plaza_code": "20"
+//   "to": "2024-06-01",
+//   "form": "2024-01-01",
+// }

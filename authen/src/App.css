@@ -4148,7 +4148,7 @@ a:focus {
 
 #sidebar ul li a {
   padding: 12px;
-  font-size: 1.1em;
+  /* font-size: 1em; */
   display: block;
   color: #535252;
 }

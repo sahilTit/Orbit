@@ -26,38 +26,46 @@ function SideBar({ sidebarWidth }) {
             >
               <i className="fa fa-widgets mr-3"></i> Master
             </a>
-            <ul className="collapse list-unstyled" id="homeSubmenu">
+            <ul className="collapse list-unstyled " id="homeSubmenu">
               {/* <li>
                 <NavLink className="active" to="master">
                   <i className="fa fa-list"></i> Master
                 </NavLink>
               </li> */}
 
-              <li>
-                <NavLink className="active" to="table">
-                  <i className="fa fa-list"></i>Plaza Table
+              <li className="f-a-17">
+                <NavLink className="active " to="table">
+                  <i className="fa fa-list"></i>
+                  <span className="f-s-15 m-l-5">Plaza Table</span>
                 </NavLink>
               </li>
 
               <li>
                 <NavLink className="active" to="main">
-                  <i className="fa fa-list"></i> Role
+                  <i className="fa fa-list"></i>
+
+                  <span className="f-s-15 m-l-5">Role</span>
                 </NavLink>
               </li>
 
               <li>
                 <NavLink className="active" to="expensehead">
-                  <i className="fa fa-list"></i> Expense Head
+                  <i className="fa fa-list"></i>
+                  <span className="f-s-15 m-l-5">Expense Head</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink className="active" to="usermaster">
-                  <i className="fa fa-list"></i>User Master
+                  <i className="fa fa-list"></i>
+
+                  <span className="f-s-15 m-l-5">User Master</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink className="active" to="plazatable">
-                  <i className="fa fa-list"></i>Plaza Master
+                  <i className="fa fa-list"></i>
+
+                  <span className="f-s-15 m-l-5">Plaza Master</span>
                 </NavLink>
               </li>
             </ul>
@@ -81,22 +89,27 @@ function SideBar({ sidebarWidth }) {
 
               <li>
                 <NavLink className="active" to="plazareport">
-                  <i className="fa fa-list"></i>Plaza Report
+                  <i className="fa fa-list"></i>
+
+                  <span className="f-s-15 m-l-5">Plaza Report</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink className="active" to="consreport">
-                  <i className="fa fa-list"></i>Consolid Report
+                  <i className="fa fa-list"></i>
+                  <span className="f-s-15 m-l-5">Consolid Report</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink className="active" to="consreport-2">
-                  <i className="fa fa-list"></i>Consolid Report 2
+                  <i className="fa fa-list"></i>
+                  <span className="f-s-15 m-l-5">Consolid Report 2</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink className="active" to="horeport">
-                  <i className="fa fa-list"></i>HO Report
+                  <i className="fa fa-list"></i>
+                  <span className="f-s-15 m-l-5">Ho Report</span>
                 </NavLink>
               </li>
             </ul>

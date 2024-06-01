@@ -47,7 +47,7 @@ const PlazaReport = () => {
                 </li>
 
                 <li className="breadcrumb-item active" aria-current="page">
-                  Consolidate Report
+                   Report
                 </li>
               </ul>
             </nav>
