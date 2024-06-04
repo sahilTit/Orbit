@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./PlazaReport.css";
 // import Select from "../pages/role/SearchSelectInput";
 // import SearchSelectedInput from "../pages/role/SearchSelectInput";
@@ -16,13 +16,14 @@ const PlazaReport = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       const response = await fetch(Api8, {
         method: "POST",
         body: JSON.stringify({
-          from: "2024-01-04",
+          from: fromDate,
           plaza_code: "",
-          to: "2024-06-04",
+          to: toDate,
         }),
       });
       if (response.ok) {
@@ -35,83 +36,68 @@ const PlazaReport = () => {
       console.log(error);
     }
   };
+  // console.log(data);
 
-  const gettotal = (value) => {
-    const sums = {
-      cash_1: 0,
-      cash_2: 0,
-      monthly_pass_amount: 0,
-      gross_cash_rec: 0,
-      total_fast_tag_cl: 0,
-      expense_from_tp: 0,
-      total_coll: 0,
-      agreed_remittance: 0,
-      total_expense_from_ho: 0,
-      margin_without_expense: 0,
-    };
-  value &&  value.forEach((obj) => {
-      for (const key in sums) {
-        sums[key] += parseFloat(obj[key]) || 0;
-      }
-    })
-    // console.log(sums['cash_1']);
-    const total_sum = {
-      cash_1: sums["cash_1"],
-      cash_2: sums["cash_2"],
-      monthly_pass_amount: sums["monthly_pass_amount"],
-      gross_cash_rec: sums["gross_cash_rec"],
-      total_fast_tag_cl: sums["total_fast_tag_cl"],
-      expense_from_tp: sums["expense_from_tp"],
-      total_coll: sums["total_coll"],
-      agreed_remittance: sums["agreed_remittance"],
-      total_expense_from_ho: sums["total_expense_from_ho"],
-      margin_without_expense: parseFloat(
-        parseFloat(sums["total_coll"]) - parseFloat(sums["agreed_remittance"])
-      ),
-      total_exp: parseFloat(
-        parseFloat(sums["total_expense_from_ho"]) +
-          parseFloat(sums["expense_from_tp"])
-      ),
-      net_coll: parseFloat(
-        sums["total_coll"] -
-          parseFloat(
-            parseFloat(sums["total_expense_from_ho"]) +
-              parseFloat(sums["expense_from_tp"])
-          )
-      ),
-      non_fst_tg_pnlty: parseFloat(sums["cash_1"] / 2),
-      "p/l": parseFloat(
-        parseFloat(sums["total_coll"]) -
-          parseFloat(sums["agreed_remittance"]) -
-          parseFloat(
-            parseFloat(sums["total_expense_from_ho"]) +
-              parseFloat(sums["expense_from_tp"])
-          ) -
-          parseFloat(sums["cash_1"] / 2)
-      ),
-      per: parseFloat(
-        parseFloat(
-          parseFloat(
-            parseFloat(
-              parseFloat(sums["total_coll"]) -
-                parseFloat(sums["agreed_remittance"])
-            ) / parseFloat(sums["agreed_remittance"])
-          )
-        ) * 100
-      ).toFixed(2),
-      tcs: parseFloat(
-        parseFloat(
-          parseFloat(sums["cash_1"] / 2) + parseFloat(sums["agreed_remittance"])
-        ) * 0.02
-      ).toFixed(2),
-    };
-    // console.log(total_sum);
-    return total_sum;
+  // const aggredData =
+  //   data &&
+  //   data.reduce((acc, curr) => {
+  //     const name = curr.name;
+  //     if (!acc[name]) {
+  //       acc[name] = [];
+  //     }
+  //     acc[name].push(curr);
+  //     return acc;
+  //   }, {});
+
+  // console.log(aggredData);
+  // console.log(aggredData["BADEWADI "]);
+
+  const groupAndSumData = (data) => {
+    const groupedData =
+      data &&
+      data.reduce((acc, item) => {
+        const key = item.name;
+        if (!acc[key]) {
+          acc[key] = {
+            name: "",
+            total_cash_1: 0,
+            total_cash_2: 0,
+            total_monthly_pass_amount: 0,
+            total_gross_cash_rec: 0,
+            total_fast_tag_cl: 0,
+            total_expense_from_tp: 0,
+            total_coll: 0,
+            total_agreed_remittance: 0,
+            total_total_expense_from_ho: 0,
+            total_margin_without_expense: 0,
+          };
+        }
+        acc[key].name = item.name;
+        acc[key].total_cash_1 += parseFloat(item.cash_1);
+        acc[key].total_cash_2 += parseFloat(item.cash_2);
+        acc[key].total_monthly_pass_amount += parseFloat(
+          item.monthly_pass_amount
+        );
+        acc[key].total_gross_cash_rec += parseFloat(item.gross_cash_rec);
+        acc[key].total_fast_tag_cl += parseFloat(item.total_fast_tag_cl);
+        acc[key].total_expense_from_tp += parseFloat(item.expense_from_tp);
+        acc[key].total_coll += parseFloat(item.total_coll);
+        acc[key].total_agreed_remittance += parseFloat(item.agreed_remittance);
+        acc[key].total_total_expense_from_ho += parseFloat(
+          item.total_expense_from_ho
+        );
+        acc[key].total_margin_without_expense += parseFloat(
+          item.margin_without_expense
+        );
+
+        return acc;
+      }, {});
+
+    return Object.values(groupedData);
   };
-  //   const TABLE_HEAD = ["Sr no","Toll Plaza Name","Remittance","TCS","TOTAL","NON FASTTAG CASH PENALTY","TCS ","TOTAL ","GRAND TOTAL","TOTAL COLLECTION"];
-
-  const total_consolidate = gettotal(data);
-  console.log(total_consolidate);
+  const wrap = groupAndSumData(data);
+  console.log(wrap);
+  // console.log(wrap.map((e)=>{e.name}))
 
   return (
     <>
@@ -161,7 +147,10 @@ const PlazaReport = () => {
                     <input
                       type="date"
                       className="form-control"
-                      value={toDate}
+                      value={fromDate}
+                      onChange={(e) => {
+                        setFromDate(e.target.value);
+                      }}
                     />
                   </div>
                 </div>
@@ -179,7 +168,10 @@ const PlazaReport = () => {
                     <input
                       type="date"
                       className="form-control"
-                      value={fromDate}
+                      value={toDate}
+                      onChange={(e) => {
+                        setToDate(e.target.value);
+                      }}
                     />
                   </div>
                 </div>
@@ -241,24 +233,23 @@ const PlazaReport = () => {
                     <th>Gross Cash Collection</th>
                     <th>Fast Tag Collection</th>
                     <th>Total Collection</th>
-                    {/* <th>Salary</th> */}
                     <th>Agreed Remidance</th>
                     <th>ACTIONS</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {data &&
-                    data.map((eachData, index) => (
-                      <tr key={eachData.cash_1}>
+                  {wrap &&
+                    wrap.map((eachData, index) => (
+                      <tr key={eachData.total_coll}>
                         <td>{index + 1}</td>
                         <td>{eachData.name}</td>
-                        <td>{eachData.cash_1}</td>
-                        <td>{eachData.cash_2}</td>
-                        <td>{eachData.monthly_pass_amount}</td>
-                        <td>{eachData.gross_cash_rec}</td>
+                        <td>{eachData.total_cash_1}</td>
+                        <td>{eachData.total_cash_2}</td>
+                        <td>{eachData.total_monthly_pass_amount}</td>
+                        <td>{eachData.total_gross_cash_rec}</td>
                         <td>{eachData.total_fast_tag_cl}</td>
+                        <td>{eachData.total_expense_from_tp}</td>
                         <td>{eachData.total_coll}</td>
-                        <td>{eachData.agreed_remittance}</td>
                         <td>Edit=I</td>
                       </tr>
                     ))}
