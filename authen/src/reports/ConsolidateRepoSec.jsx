@@ -6,35 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 // import DatePicker from "react-datepicker";
 
 const PlazaReport = () => {
-  // const [selctedPlazaOrMonth, setSelectedPlazaOrMonth] = useState(null);
-
-  // const handleSelectChange = (option) => {
-  //   setSelectedPlazaOrMonth(option);
-  // };
-
-  // const monthOptions = [
-  //   { label: "January", value: "01" },
-  //   { label: "February", value: "02" },
-  //   { label: "March", value: "03" },
-  //   { label: "April", value: "04" },
-  //   { label: "May", value: "05" },
-  //   { label: "June", value: "06" },
-  //   { label: "July", value: "07" },
-  //   { label: "August", value: "08" },
-  //   { label: "September", value: "09" },
-  //   { label: "October", value: "10" },
-  //   { label: "November", value: "11" },
-  //   { label: "December", value: "12" },
-  // ];
-
-  // const yearOptions = [
-  //   { year: "2024" },
-  //   { label: "2023" },
-  //   { label: "2022" },
-  //   { label: "2021" },
-  //   { label: "2020" },
-  //   { label: "2019" },
-  // ];
   const [data, setData] = useState("");
 
   const [month, setMonth] = useState("1");
@@ -263,3 +234,33 @@ const PlazaReport = () => {
 };
 
 export default PlazaReport;
+
+// const [selctedPlazaOrMonth, setSelectedPlazaOrMonth] = useState(null);
+
+// const handleSelectChange = (option) => {
+//   setSelectedPlazaOrMonth(option);
+// };
+
+// const monthOptions = [
+//   { label: "January", value: "01" },
+//   { label: "February", value: "02" },
+//   { label: "March", value: "03" },
+//   { label: "April", value: "04" },
+//   { label: "May", value: "05" },
+//   { label: "June", value: "06" },
+//   { label: "July", value: "07" },
+//   { label: "August", value: "08" },
+//   { label: "September", value: "09" },
+//   { label: "October", value: "10" },
+//   { label: "November", value: "11" },
+//   { label: "December", value: "12" },
+// ];
+
+// const yearOptions = [
+//   { year: "2024" },
+//   { label: "2023" },
+//   { label: "2022" },
+//   { label: "2021" },
+//   { label: "2020" },
+//   { label: "2019" },
+// ];

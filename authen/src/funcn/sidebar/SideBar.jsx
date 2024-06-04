@@ -112,6 +112,12 @@ function SideBar({ sidebarWidth }) {
                   <span className="f-s-15 m-l-5">Ho Report</span>
                 </NavLink>
               </li>
+              <li>
+                <NavLink className="active" to="weekrem">
+                  <i className="fa fa-list"></i>
+                  <span className="f-s-15 m-l-5">Weekly Remitance</span>
+                </NavLink>
+              </li>
             </ul>
           </li>
         </ul>

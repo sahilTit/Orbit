@@ -1,10 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import "./PlazaReport.css";
-// import SearchSelectedInput from "../pages/role/SearchSelectInput";
 import SearchableSelect from "../pages/role/SearchSelectInput";
 import "react-datepicker/dist/react-datepicker.css";
-// import DatePicker from "react-datepicker";
 
 const PlazaReport = () => {
   const { handlePostRequest, postData, setDay, setDay1, data3, setCode } =
@@ -252,7 +250,6 @@ const PlazaReport = () => {
 
 export default PlazaReport;
 
-
 // {
 //   "plaza_code": "20",
 //   "to": "2024-06-01",
@@ -264,3 +261,34 @@ export default PlazaReport;
 //   "to": "2024-06-01",
 //   "form": "2024-01-01",
 // }
+
+// {
+//   "plaza_code": "2",
+//   "name": "BADEWADI ",
+//   "date_rep": "2024-02-01",
+//   "cash_1": "2480.00",
+//   "cash_2": "11620.00",
+//   "monthly_pass_amount": "660.00",
+//   "gross_cash_rec": "14760.00",
+//   "total_fast_tag_cl": "135770.00",
+//   "expense_from_tp": "0.00",
+//   "total_coll": "150530.00",
+//   "agreed_remittance": "113626",
+//   "total_expense_from_ho": "0",
+//   "margin_without_expense": "36904.00"
+// },
+// {
+//   "plaza_code": "3",
+//   "name": "KHARBI ",
+//   "date_rep": "2024-02-03",
+//   "cash_1": "630.00",
+//   "cash_2": "23200.00",
+//   "monthly_pass_amount": "4290.00",
+//   "gross_cash_rec": "28120.00",
+//   "total_fast_tag_cl": "187590.00",
+//   "expense_from_tp": "11900.00",
+//   "total_coll": "215710.00",
+//   "agreed_remittance": "177141",
+//   "total_expense_from_ho": "0",
+//   "margin_without_expense": "50469.00"
+// },

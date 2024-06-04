@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import "./PlazaReport.css";
+// import Select from "../pages/role/SearchSelectInput";
+// import SearchSelectedInput from "../pages/role/SearchSelectInput";
 import "react-datepicker/dist/react-datepicker.css";
-import { DataContext } from "../context/DataContext";
-import SearchableSelect from "../pages/role/SearchSelectInput";
-import { Api7 } from "../context/Apis";
+import { Api8 } from "../context/Apis";
+// import DatePicker from "react-datepicker";
 
-const HoExpense = () => {
+const PlazaReport = () => {
   const [data, setData] = useState("");
 
   const [toDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
@@ -13,32 +14,15 @@ const HoExpense = () => {
     new Date().toISOString().split("T")[0]
   );
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [code, setCode] = useState("");
-
-  const handleSelectChange = (option) => {
-    setSelectedOption(option);
-    setCode(option ? option.value : null);
-  };
-
-  const { data3 } = useContext(DataContext);
-
-  let plazaOption = data3
-    ? data3.map((eachData) => ({
-        label: eachData.plaza,
-        value: eachData.plaza_id,
-      }))
-    : [];
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(Api7, {
+      const response = await fetch(Api8, {
         method: "POST",
         body: JSON.stringify({
-          plaza_code: code,
-          to: fromDate,
-          from: toDate,
+          from: "2024-01-04",
+          plaza_code: "",
+          to: "2024-06-04",
         }),
       });
       if (response.ok) {
@@ -51,7 +35,83 @@ const HoExpense = () => {
       console.log(error);
     }
   };
-  // console.log(data);
+
+  const gettotal = (value) => {
+    const sums = {
+      cash_1: 0,
+      cash_2: 0,
+      monthly_pass_amount: 0,
+      gross_cash_rec: 0,
+      total_fast_tag_cl: 0,
+      expense_from_tp: 0,
+      total_coll: 0,
+      agreed_remittance: 0,
+      total_expense_from_ho: 0,
+      margin_without_expense: 0,
+    };
+  value &&  value.forEach((obj) => {
+      for (const key in sums) {
+        sums[key] += parseFloat(obj[key]) || 0;
+      }
+    })
+    // console.log(sums['cash_1']);
+    const total_sum = {
+      cash_1: sums["cash_1"],
+      cash_2: sums["cash_2"],
+      monthly_pass_amount: sums["monthly_pass_amount"],
+      gross_cash_rec: sums["gross_cash_rec"],
+      total_fast_tag_cl: sums["total_fast_tag_cl"],
+      expense_from_tp: sums["expense_from_tp"],
+      total_coll: sums["total_coll"],
+      agreed_remittance: sums["agreed_remittance"],
+      total_expense_from_ho: sums["total_expense_from_ho"],
+      margin_without_expense: parseFloat(
+        parseFloat(sums["total_coll"]) - parseFloat(sums["agreed_remittance"])
+      ),
+      total_exp: parseFloat(
+        parseFloat(sums["total_expense_from_ho"]) +
+          parseFloat(sums["expense_from_tp"])
+      ),
+      net_coll: parseFloat(
+        sums["total_coll"] -
+          parseFloat(
+            parseFloat(sums["total_expense_from_ho"]) +
+              parseFloat(sums["expense_from_tp"])
+          )
+      ),
+      non_fst_tg_pnlty: parseFloat(sums["cash_1"] / 2),
+      "p/l": parseFloat(
+        parseFloat(sums["total_coll"]) -
+          parseFloat(sums["agreed_remittance"]) -
+          parseFloat(
+            parseFloat(sums["total_expense_from_ho"]) +
+              parseFloat(sums["expense_from_tp"])
+          ) -
+          parseFloat(sums["cash_1"] / 2)
+      ),
+      per: parseFloat(
+        parseFloat(
+          parseFloat(
+            parseFloat(
+              parseFloat(sums["total_coll"]) -
+                parseFloat(sums["agreed_remittance"])
+            ) / parseFloat(sums["agreed_remittance"])
+          )
+        ) * 100
+      ).toFixed(2),
+      tcs: parseFloat(
+        parseFloat(
+          parseFloat(sums["cash_1"] / 2) + parseFloat(sums["agreed_remittance"])
+        ) * 0.02
+      ).toFixed(2),
+    };
+    // console.log(total_sum);
+    return total_sum;
+  };
+  //   const TABLE_HEAD = ["Sr no","Toll Plaza Name","Remittance","TCS","TOTAL","NON FASTTAG CASH PENALTY","TCS ","TOTAL ","GRAND TOTAL","TOTAL COLLECTION"];
+
+  const total_consolidate = gettotal(data);
+  console.log(total_consolidate);
 
   return (
     <>
@@ -59,7 +119,7 @@ const HoExpense = () => {
         <div className="row mb-4 ">
           <div className="col-12 shadow">
             <nav className="pt-2 py-2 px-3">
-              <div className="f-s-24 p-t-2 float-left">Ho Expense</div>
+              <div className="f-s-24 p-t-2 float-left">Weekly Remitance</div>
 
               <ul className="breadcrumb float-right bg-transparent m-b-1">
                 <li className="breadcrumb-item">
@@ -67,7 +127,7 @@ const HoExpense = () => {
                 </li>
 
                 <li className="breadcrumb-item active" aria-current="page">
-                  Ho Expense Report
+                  Weekly Report
                 </li>
               </ul>
             </nav>
@@ -85,11 +145,23 @@ const HoExpense = () => {
                     From <span className="text-danger">*</span>
                   </span>
                   <div className="form-group">
+                    {/* <DatePicker
+                      selected={startdate}
+                      value={startdate}
+                      onChange={(date) => {
+                        setStartDate(date);
+                        setDay1(date.target.value);
+                      }}
+                    /> */}
+                    {/* <Select
+                      options={yearOptions}
+                      value="Year"
+                      onChange={handleSelectChange}
+                    ></Select> */}
                     <input
                       type="date"
-                      value={toDate}
-                      onChange={(e) => setToDate(e.target.value)}
                       className="form-control"
+                      value={toDate}
                     />
                   </div>
                 </div>
@@ -108,18 +180,6 @@ const HoExpense = () => {
                       type="date"
                       className="form-control"
                       value={fromDate}
-                      onChange={(e) => setFromDate(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-sm-2">
-                  <div className="form-group">
-                    <span>Plaza</span> <span className="text-danger ">*</span>
-                    <SearchableSelect
-                      options={plazaOption}
-                      value={selectedOption}
-                      onChange={handleSelectChange}
                     />
                   </div>
                 </div>
@@ -173,12 +233,17 @@ const HoExpense = () => {
                   </tr> */}
 
                   <tr>
-                    <th>Sr</th>
-                    <th className="">Plaza Name</th>
-                    <th>Date</th>
-                    <th> Expense No</th>
-                    <th>Amount </th>
-                    <th>Narration</th>
+                    <th className="">Name</th>
+                    <th>Toll Plaza Name</th>
+                    <th>cash 1</th>
+                    <th>CASH 2</th>
+                    <th>MONTHLY PASS AMOUNT</th>
+                    <th>Gross Cash Collection</th>
+                    <th>Fast Tag Collection</th>
+                    <th>Total Collection</th>
+                    {/* <th>Salary</th> */}
+                    <th>Agreed Remidance</th>
+                    <th>ACTIONS</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -186,12 +251,15 @@ const HoExpense = () => {
                     data.map((eachData, index) => (
                       <tr key={eachData.cash_1}>
                         <td>{index + 1}</td>
-                        <td>{eachData.plaza}</td>
-                        <td>{eachData.date_rep}</td>
                         <td>{eachData.name}</td>
-                        <td>{eachData.amount}</td>
-                        <td>{eachData.narration}</td>
-                        {/* <td>Edit=I</td> */}
+                        <td>{eachData.cash_1}</td>
+                        <td>{eachData.cash_2}</td>
+                        <td>{eachData.monthly_pass_amount}</td>
+                        <td>{eachData.gross_cash_rec}</td>
+                        <td>{eachData.total_fast_tag_cl}</td>
+                        <td>{eachData.total_coll}</td>
+                        <td>{eachData.agreed_remittance}</td>
+                        <td>Edit=I</td>
                       </tr>
                     ))}
                 </tbody>
@@ -219,4 +287,4 @@ const HoExpense = () => {
   );
 };
 
-export default HoExpense;
+export default PlazaReport;
