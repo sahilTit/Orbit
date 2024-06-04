@@ -118,6 +118,12 @@ function SideBar({ sidebarWidth }) {
                   <span className="f-s-15 m-l-5">Weekly Remitance</span>
                 </NavLink>
               </li>
+              <li>
+                <NavLink className="active" to="dailyrem">
+                  <i className="fa fa-list"></i>
+                  <span className="f-s-15 m-l-5">Daily Remitance</span>
+                </NavLink>
+              </li>
             </ul>
           </li>
         </ul>

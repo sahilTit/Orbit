@@ -45,6 +45,7 @@ const router = createBrowserRouter(
           <Route path="consreport-2" element={<ConsolidateReportSec />} />
           <Route path="horeport" element={<HoExpense />} />
           <Route path="weekrem" element={<WeeklyRemitance />} />
+          <Route path="dailyrem" element={<DailRemitance />} />
         </Route>
       </Route>
       <Route path="*" element={<Logt />} />
