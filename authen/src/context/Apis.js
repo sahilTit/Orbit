@@ -7,5 +7,6 @@ const Api5 = `${Api}/get_plaza`;
 const Api6 = `${Api}/consolidated_report`;
 const Api7 = `${Api}/hoexpense_detail`;
 const Api8 = `${Api}/weekly_report`;
+const Api9 = `${Api}/daily_report`;
 const Login = `${Api}/login`;
-export { Api1, Api2, Api3, Api4, Api5, Api6, Api7, Api8, Login };
+export { Api1, Api2, Api3, Api4, Api5, Api6, Api7, Api8, Api9, Login };
