@@ -2,11 +2,20 @@ import { useState } from "react";
 import "./Logt.css";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../context/Apis";
+import CryptoJS from "crypto-js";
+
 const Logt = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
+
+  // const encryptAndStoreData = (data, key) => {
+  //   localStorage.clear();
+  //   let encryptedData = CryptoJS.AES.encrypt(data, key).toString();
+  //   localStorage.setItem("encryptedData", encryptedData);
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,11 +29,22 @@ const Logt = () => {
 
       const data = await res.json();
       const token = data;
-      console.log(data.ResponseCode);
+      // encryptAndStoreData(data, "auth_token");
+      console.log(JSON.stringify(data));
       if (data.ResponseCode) {
         if (data.ResponseCode == 200) {
-          localStorage.setItem("auth_token", JSON.stringify(token));
+          const encryptedToken = JSON.stringify(token);
+          var encrypt = CryptoJS.AES.encrypt(
+            encryptedToken,
+            "auth_token"
+          ).toString();
+          localStorage.setItem("auth_token", encrypt);
           navigate("/home");
+          // localStorage.setItem("auth_token", JSON.stringify(token));
+          // console.log(encryptedToken);
+          // console.log(encrypt)
+          // encryptAndStoreData(encryptedToken, "auth_token");
+          // encryptAndStoreData(JSON.stringify(data), "auth_token");
           sessionStorage.setItem("auth_token", JSON.stringify(token));
         } else if (data.ResponseCode == 401) {
           setErrMsg(`${data.ResponseMsg}`);

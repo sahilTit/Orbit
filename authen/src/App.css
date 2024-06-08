@@ -4151,9 +4151,16 @@ a:focus {
   /* font-size: 1em; */
   display: block;
   color: #535252;
+  text-decoration: none;
 }
 
 #sidebar ul li a:hover {
+  color: #009688;
+  background-image: linear-gradient(#fcfcfc, #fff9, #fcfcfc);
+  box-shadow: 1px 2px 10px #ccc;
+}
+
+#sidebar ul li a.active {
   color: #009688;
   background-image: linear-gradient(#fcfcfc, #fff9, #fcfcfc);
   box-shadow: 1px 2px 10px #ccc;
@@ -12108,10 +12115,10 @@ pre code {
   border-top: 2px solid #dee2e6;
 }
 
-.table-sm td,
+/* .table-sm td,
 .table-sm th {
   padding: 0.3rem;
-}
+} */
 
 .table-bordered,
 .table-bordered td,

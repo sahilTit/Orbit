@@ -111,7 +111,7 @@ const Table = () => {
           </div>
           <div className="row mt-3">
             <div className="col ">
-              <table className="table table-hover  ">
+              <table className="table table-hover">
                 <thead className="table-dark fs-6">
                   <tr>
                     <th scope="col">Sr.No</th>
@@ -120,7 +120,7 @@ const Table = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody className="f-s-15">
+                <tbody className="f-s-15 ">
                   {currentItems &&
                     currentItems.map((eachData, index) => (
                       <tr key={eachData.plaza_id}>

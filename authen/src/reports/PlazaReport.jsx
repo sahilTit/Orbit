@@ -89,7 +89,7 @@ const PlazaReport = () => {
                       className="form-control"
                       value={fromDate}
                       onChange={(e) => {
-                        // setFromDate();
+                        setFromDate(e.target.value);
                         setDay(e.target.value);
                       }}
                     />
@@ -106,7 +106,7 @@ const PlazaReport = () => {
                       className="form-control"
                       value={toDate}
                       onChange={(e) => {
-                        // setToDate();
+                        setToDate(e.target.value);
                         setDay1(e.target.value);
                       }}
                     />
@@ -158,9 +158,9 @@ const PlazaReport = () => {
           <div className="col">
             <div className="table-responsive" id="printData">
               <table
-                className="table responsive table-hover table-bordered table-sm"
+                className="table responsive table-hover table-bordered "
                 cellSpacing="3"
-                id="exportTable"
+                // id="exportTable"
               >
                 <thead className="thead-light">
                   {/* <tr>
@@ -173,6 +173,7 @@ const PlazaReport = () => {
                   </tr> */}
 
                   <tr>
+                    <th>sr</th>
                     <th className="">Date</th>
                     <th>OPENING AMOUNT</th>
                     <th>ADVANCE FROM H.O</th>
@@ -201,6 +202,7 @@ const PlazaReport = () => {
                   {postData.data &&
                     postData.data.map((eachData) => (
                       <tr key={eachData.id}>
+                        <td>sr</td>
                         <td>{eachData.date_rep}</td>
                         <td>{eachData.initial_opn}</td>
                         <td>{eachData.adv_from_ho}</td>

@@ -34,7 +34,6 @@ const PlazaReport = () => {
       console.log(error);
     }
   };
-  console.log(data);
 
   return (
     <>

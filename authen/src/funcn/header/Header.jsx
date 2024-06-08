@@ -33,7 +33,7 @@ const Header = ({ toggleNav }) => {
             <li className="nav-item dropdown list-unstyled m-l-7">
               <img
                 alt="user"
-                className="img-fluid rounded-circle mr-auto bg-info dropdown-toggle user_img"
+                className="img-fluid rounded-circle mr-auto bg-info dropdown-toggle "
                 data-toggle="dropdown"
               />
               <div className="dropdown-menu dropdown-menu-right animated zoomIn">
@@ -46,7 +46,7 @@ const Header = ({ toggleNav }) => {
 
                   <a href="" className="user_menu">
                     <li className="list-group-item py-2 pl-3 f-s-14">
-                      <i className="fa fa-bell-o mr-2"></i>Notifivation
+                      <i className="fa fa-bell-o mr-2"></i>Notification
                     </li>
                   </a>
 

@@ -27,7 +27,6 @@ const DataProvider = ({ children }) => {
   const [postData1, setPostData1] = useState("");
 
   useEffect(() => {
-    // Fetch data from multiple APIs
     const fetchData1 = async () => {
       try {
         const response = await fetch(Api1);

@@ -44,7 +44,6 @@ class HomePage extends Component {
                 "Content-Type":"application/json",
                 Accept:"application/json",
                 "Access-Control-Allow-Origin":"*",
-                
             },
             body: JSON.stringify({
                 email,

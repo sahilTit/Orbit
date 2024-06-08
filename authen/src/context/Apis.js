@@ -9,3 +9,13 @@ const Api7 = `${Api}/hoexpense_detail`;
 const Api8 = `${Api}/weekly_report`;
 const Login = `${Api}/login`;
 export { Api1, Api2, Api3, Api4, Api5, Api6, Api7, Api8, Login };
+
+
+
+// <td>{eachData.name}</td>
+// <td>{eachData.addr}</td>
+// <td>{eachData.contract}</td>
+// <td>{eachData.remitance}</td>
+// <td>{eachData.opn_amt}</td>
+
+//7875502800

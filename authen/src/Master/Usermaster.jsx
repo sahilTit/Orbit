@@ -20,7 +20,6 @@ const Usermaster = () => {
   const handleShow = () => setShow(true);
 
   const { data3 } = useContext(DataContext);
-  // console.log(data3);
 
   const filteredData =
     data3 &&
@@ -58,7 +57,7 @@ const Usermaster = () => {
                     <h6 className="f-s-18">Master</h6>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    Master
+                    User
                   </li>
                 </ul>
               </nav>
@@ -141,12 +140,12 @@ const Usermaster = () => {
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Name</Modal.Title>
+          <Modal.Title>Add User </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>User Name</Form.Label>
               <Form.Control type="Name  " placeholder="Name" autoFocus />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

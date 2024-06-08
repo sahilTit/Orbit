@@ -58,9 +58,9 @@ const PlazaReport = () => {
           method: "POST",
           body: JSON.stringify({
             plaza_code: code,
-            to: toDate,
-            from: fromDate,
-            date: toDate,
+            to: "2024-06-07",
+            from: "2024-01-07",
+            date: "2024-06-07",
           }),
         }
       );
@@ -72,9 +72,10 @@ const PlazaReport = () => {
       console.log(error);
     }
   };
+  const groupData = groupAndSumData(data?.Data || []);
+  // console.log(groupData)
 
   const renderTableA = () => {
-    const groupedData = groupAndSumData(data?.Data || []);
     return (
       <div className="row p-20">
         <div className="col">
@@ -88,13 +89,13 @@ const PlazaReport = () => {
                 <tr>
                   <th className="">Sr No</th>
                   <th>Name</th>
-                  <th>Total Remittance</th>
+                  <th>Total Remitance</th>
                   <th>Total Collection</th>
                 </tr>
               </thead>
               <tbody>
-                {groupedData &&
-                  groupedData.map((eachData, index) => (
+                {groupData &&
+                  groupData.map((eachData, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{eachData.name}</td>
@@ -123,7 +124,7 @@ const PlazaReport = () => {
               <tr>
                 <th className="">Sr No</th>
                 <th>Date</th>
-                <th>Remittance</th>
+                <th>Remi</th>
                 <th>Closing Balance</th>
               </tr>
             </thead>
@@ -144,13 +145,8 @@ const PlazaReport = () => {
     </div>
   );
 
-  const renderTable = () => {
-    if (data.ResponseCode === 201) {
-      return renderTableA();
-    } else {
-      return renderTableB();
-    }
-  };
+  const renderTable = () =>
+    data.ResponseCode == 201 ? renderTableA() : renderTableB();
 
   return (
     <>

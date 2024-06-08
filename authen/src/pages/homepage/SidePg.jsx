@@ -8,7 +8,7 @@ import Header from "../../funcn/header/Header";
 const SidePg = () => {
   const [sidebarWidth, setSidebarWidth] = useState("0");
   const [marginLeft, setMarginLeft] = useState("0");
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
 
   const navigate = useNavigate();
 

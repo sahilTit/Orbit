@@ -1,47 +1,48 @@
-import { useContext, useEffect, useState } from "react";
-import { DataContext } from "../context/DataContext";
+import { useState } from "react";
 import "./PlazaReport.css";
+// import Select from "../pages/role/SearchSelectInput";
 // import SearchSelectedInput from "../pages/role/SearchSelectInput";
 import "react-datepicker/dist/react-datepicker.css";
+import { Api8 } from "../context/Apis";
 // import DatePicker from "react-datepicker";
 
 const PlazaReport = () => {
-  const { handlePostRequest1, postData1, setDayCons, setDayCons1 } =
-    useContext(DataContext);
+  const [data, setData] = useState("");
 
-  // console.log(postData1);
-  // State for date inputs
-  // const [startdate, setStartDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
   const [fromDate, setFromDate] = useState(
     new Date().toISOString().split("T")[0]
   );
 
-  useEffect(() => {
-    const today = new Date().toISOString().split("T")[0];
-    setFromDate(today);
-    setToDate(today);
-    setDayCons(today);
-    setDayCons1(today);
-  }, [setDayCons, setDayCons1]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setDayCons(fromDate);
-    setDayCons1(toDate);
-    handlePostRequest1();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(
+        "http://192.168.1.131/toll_manage/appv1/all_plaza_opening",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            date: fromDate,
+          }),
+        }
+      );
+      if (response.ok) {
+        const response1 = await response.json();
+        // console.log(response1);
+        setData(response1);
+      }
+      // console.log(response1);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  // console.log(postData1);
   return (
     <>
       <div className="container-fluid ">
         <div className="row mb-4 ">
           <div className="col-12 shadow">
             <nav className="pt-2 py-2 px-3">
-              <div className="f-s-24 p-t-2 float-left">
-                Consolidate Report I
-              </div>
+              <div className="f-s-24 p-t-2 float-left">Closing Balance</div>
 
               <ul className="breadcrumb float-right bg-transparent m-b-1">
                 <li className="breadcrumb-item">
@@ -49,7 +50,7 @@ const PlazaReport = () => {
                 </li>
 
                 <li className="breadcrumb-item active" aria-current="page">
-                  Report
+                  Closing Balance
                 </li>
               </ul>
             </nav>
@@ -64,7 +65,7 @@ const PlazaReport = () => {
               <div className="row">
                 <div className="col-sm-2">
                   <span>
-                    From Date <span className="text-danger">*</span>
+                    Date <span className="text-danger">*</span>
                   </span>
                   <div className="form-group">
                     {/* <DatePicker
@@ -75,13 +76,18 @@ const PlazaReport = () => {
                         setDay1(date.target.value);
                       }}
                     /> */}
+                    {/* <Select
+                      options={yearOptions}
+                      value="Year"
+                      onChange={handleSelectChange}
+                    ></Select> */}
                     <input
                       type="date"
                       className="form-control"
                       value={fromDate}
                       onChange={(e) => {
                         setFromDate(e.target.value);
-                        setDayCons(e.target.value);
+                        setToDate(e.target.value);
                       }}
                     />
                   </div>
@@ -89,18 +95,22 @@ const PlazaReport = () => {
 
                 <div className="col-sm-2">
                   <span>
-                    To Date <span className="text-danger">*</span>
+                    {/* To <span className="text-danger ">*</span> */}
                   </span>
                   <div className="form-group">
-                    <input
+                    {/* <Select
+                      options={monthOptions}
+                      value={selctedPlazaOrMonth}
+                      onChange={handleSelectChange}
+                    ></Select> */}
+                    {/* <input
                       type="date"
                       className="form-control"
                       value={toDate}
                       onChange={(e) => {
                         setToDate(e.target.value);
-                        setDayCons1(e.target.value);
                       }}
-                    />
+                    /> */}
                   </div>
                 </div>
 
@@ -136,7 +146,7 @@ const PlazaReport = () => {
 
         <div className="row p-20">
           <div className="col">
-            <div className="" id="printData">
+            <div className="table-responsive" id="printData">
               <table
                 className="table responsive table-hover table-bordered table-sm"
                 cellSpacing="3"
@@ -148,49 +158,23 @@ const PlazaReport = () => {
                       colSpan="22"
                       className="text-center border-top-0 border-bottom-0"
                     >
-                      {postData1[0].date_rep} : To {setDayCons1}
+                      {setDayCons} : To {setDayCons1}
                     </th>
                   </tr> */}
 
                   <tr>
-                    <th className="">Date</th>
-                    <th>OPENING AMOUNT</th>
-                    <th>ADVANCE FROM H.O</th>
-                    <th>CASH 1</th>
-                    <th>CASH 2</th>
-                    <th>MONTHLY PASS AMOUN</th>
-                    <th>ONLINE MONTHLY PASS AMOUNT</th>
-                    <th>GROSS CASH RECEIVABLE FROM TOLL PLAZA</th>
-                    <th>m-1</th>
-                    <th>m-2</th>
-                    <th>OPERATOR</th>
-                    <th>ACTIONS</th>
+                    <th className="">Sr No</th>
+                    <th>Toll Plaza Name</th>
+                    <th>Closing Balance</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {postData1 &&
-                    postData1.map((eachData) => (
-                      <tr key={eachData.id}>
-                        <td>{eachData.date_rep}</td>
-                        <td>{eachData.initial_opn}</td>
-                        <td>{eachData.cash_1}</td>
-                        <td>{eachData.cash_2}</td>
-                        <td>{eachData.monthly_pass_amount}</td>
-                        <td>{eachData.gross_cash_rec}</td>
-                        <td>{eachData.total_coll}</td>
-                        <td>{eachData.total_coll}</td>
-                        <td>{eachData.total_expense_from_ho}</td>
-                        <td>{eachData.expense_from_tp}</td>
-                        <td>{eachData.total_fast_tag_cl}</td>
-                        {/* <td>{eachData.}</td> */}
-                        {/* <td>{eachData.cash_dep_arcpl}</td>
-                        <td>{eachData.cash_kpt}</td>
-                        <td>{eachData.salary}</td>
-                        <td>{eachData.diff_reciev}</td>
-                        <td>{eachData.total_fast_tag_cl}</td>
-                        <td>{eachData.total_coll}</td>
-                        <td>{eachData.operator}</td> */}
-                        <td>edit</td>
+                  {data &&
+                    data.map((eachData, index) => (
+                      <tr key={eachData.name}>
+                        <td>{eachData.plaza_id}</td>
+                        <td>{eachData.name}</td>
+                        <td>{eachData.oa}</td>
                       </tr>
                     ))}
                 </tbody>
