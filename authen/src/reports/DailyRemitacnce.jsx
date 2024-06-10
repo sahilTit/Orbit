@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./PlazaReport.css";
 // import Select from "../pages/role/SearchSelectInput";
 // import SearchSelectedInput from "../pages/role/SearchSelectInput";
 import "react-datepicker/dist/react-datepicker.css";
-import { Api8 } from "../context/Apis";
+import { Api9 } from "../context/Apis";
 // import DatePicker from "react-datepicker";
 
 const PlazaReport = () => {
@@ -18,7 +18,7 @@ const PlazaReport = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(Api8, {
+      const response = await fetch(Api9, {
         method: "POST",
         body: JSON.stringify({
           from: fromDate,
@@ -96,6 +96,7 @@ const PlazaReport = () => {
     return Object.values(groupedData);
   };
   const wrap = groupAndSumData(data);
+  console.log(wrap);
   // console.log(wrap.map((e)=>{e.name}))
 
   return (
