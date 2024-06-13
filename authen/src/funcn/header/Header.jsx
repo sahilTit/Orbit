@@ -32,6 +32,7 @@ const Header = ({ toggleNav }) => {
 
             <li className="nav-item dropdown list-unstyled m-l-7">
               <img
+              src=""
                 alt="user"
                 className="img-fluid rounded-circle mr-auto bg-info dropdown-toggle "
                 data-toggle="dropdown"

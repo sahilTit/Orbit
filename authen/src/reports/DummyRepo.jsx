@@ -1,41 +1,45 @@
-import { useState, useContext } from "react";
-import "./PlazaReport.css";
-import "react-datepicker/dist/react-datepicker.css";
-import { DataContext } from "../context/DataContext";
+import React, { useState, useContext } from "react";
+import { MdDeleteForever } from "react-icons/md";
 import SearchableSelect from "../pages/role/SearchSelectInput";
+import { DataContext } from "../context/DataContext";
 
-const groupAndSumData = (data) => {
-  const groupedData =
-    data &&
-    data.reduce((acc, item) => {
-      const key = item.name;
-      if (!acc[key]) {
-        acc[key] = {
-          name: "",
-          total_collection: 0,
-          total_agreed_remittance: 0,
-        };
-      }
-      acc[key].name = item.name;
-      acc[key].total_collection += parseFloat(item.total_coll);
-      acc[key].total_agreed_remittance += parseFloat(item.remittance);
-
-      return acc;
-    }, {});
-
-  return Object.values(groupedData);
-};
-
-const PlazaReport = () => {
-  const [data, setData] = useState([]);
-  const [toDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
-  const [fromDate, setFromDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-
-  const { data3 } = useContext(DataContext);
+const PlazaEntry = () => {
+  const { data3, setCode } = useContext(DataContext);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [code, setCode] = useState(null);
+  const [rows, setRows] = useState([
+    {
+      id: 1,
+      expense: "1",
+      amount: "",
+      voucherNo: "",
+      narration: "",
+    },
+  ]);
+
+  const addRow = () => {
+    const newRow = {
+      id: rows.length + 1,
+      expense: "",
+      amount: "",
+      voucherNo: "",
+      narration: "",
+    };
+    setRows([...rows, newRow]);
+  };
+
+  const deleteRow = (id) => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleInputChange = (id, field, value) => {
+    const updatedRows = rows.map((row) => {
+      if (row.id === id) {
+        return { ...row, [field]: value };
+      }
+      return row;
+    });
+    setRows(updatedRows);
+  };
 
   const handleSelectChange = (option) => {
     setSelectedOption(option);
@@ -49,211 +53,335 @@ const PlazaReport = () => {
       }))
     : [];
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(
-        "http://192.168.1.131/toll_manage/appv1/fremi",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            plaza_code: code,
-            to: toDate,
-            from: fromDate,
-            date: toDate,
-          }),
-        }
-      );
-      if (response) {
-        const response1 = await response.json();
-        setData(response1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const renderTableA = () => {
-    const groupedData = groupAndSumData(data?.Data || []);
-    return (
-      <div className="row p-20">
-        <div className="col">
-          <div className="table-responsive" id="printData">
-            <table
-              className="table responsive table-hover table-bordered table-sm"
-              cellSpacing="3"
-              id="exportTable"
-            >
-              <thead className="thead-light">
-                <tr>
-                  <th className="">Sr No</th>
-                  <th>Name</th>
-                  <th>Total Remittance</th>
-                  <th>Total Collection</th>
-                </tr>
-              </thead>
-              <tbody>
-                {groupedData &&
-                  groupedData.map((eachData, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{eachData.name}</td>
-                      <td>{eachData.total_agreed_remittance}</td>
-                      <td>{eachData.total_collection}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const renderTableB = () => (
-    <div className="row p-20">
-      <div className="col">
-        <div className="table-responsive" id="printData">
-          <table
-            className="table responsive table-hover table-bordered table-sm"
-            cellSpacing="3"
-            id="exportTable"
-          >
-            <thead className="thead-light">
-              <tr>
-                <th className="">Sr No</th>
-                <th>Date</th>
-                <th>Remittance</th>
-                <th>Closing Balance</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data?.Data &&
-                data.Data.map((eachData, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{eachData.date_rep}</td>
-                    <td>{eachData.remittance}</td>
-                    <td>{eachData.total_coll}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderTable = () => {
-    if (data.ResponseCode === 201) {
-      return renderTableA();
-    } else {
-      return renderTableB();
-    }
-  };
-
   return (
     <>
       <div className="container-fluid ">
         <div className="row mb-4 ">
           <div className="col-12 shadow">
             <nav className="pt-2 py-2 px-3">
-              <div className="f-s-24 p-t-2 float-left">Collection </div>
+              <div className="f-s-24 p-t-2 float-left">Plaza Entry</div>
+
               <ul className="breadcrumb float-right bg-transparent m-b-1">
                 <li className="breadcrumb-item">
-                  <a> Report</a>
+                  <a> Entry</a>
                 </li>
+
                 <li className="breadcrumb-item active" aria-current="page">
-                  Collection
+                  Plaza Entry
                 </li>
               </ul>
             </nav>
           </div>
         </div>
       </div>
-
-      <div className="">
-        <div className="row p-l-50">
-          <div className="col-12">
-            <form>
-              <div className="row">
-                <div className="col-sm-2">
-                  <span>
-                    Date <span className="text-danger">*</span>
-                  </span>
-                  <div className="form-group">
+      <div className="container d-flex justify-content-around px-lg-5">
+        <form>
+          <div className="row row-cols-2 mx-lg-n5">
+            <div className="col px-lg-5  ">
+              <div className="form-group">
+                <span>
+                  Date <span className="text-danger">*</span>
+                </span>
+                <input type="date" className="form-control" />
+              </div>
+            </div>
+            <div className="col px-lg-5  ">
+              <div className="form-group">
+                <span>Plaza</span>
+                <SearchableSelect
+                  options={plazaOption}
+                  value={selectedOption}
+                  onChange={handleSelectChange}
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div className="container-md ">
+        <div className="row">
+          <div className="col">
+            <div className="border ">
+              <div className="col d-flex justify-content-center">
+                Collection
+              </div>
+              <div className="row gx-5">
+                <div className="col">
+                  <div className="row p-2">
+                    <label className="col-5">Advance From H.O</label>
                     <input
-                      type="date"
-                      className="form-control"
-                      value={fromDate}
-                      onChange={(e) => {
-                        setFromDate(e.target.value);
-                        setToDate(e.target.value);
-                      }}
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
                     />
                   </div>
                 </div>
-
-                <div className="col-sm-2">
-                  <span>
-                    To <span className="text-danger ">*</span>
-                  </span>
-                  <div className="form-group">
+                <div className="col">
+                  <div className="d-flex p-2">
+                    <label className="col-5">Monthly Pass Amount</label>
                     <input
-                      type="date"
-                      className="form-control"
-                      value={toDate}
-                      onChange={(e) => {
-                        setToDate(e.target.value);
-                      }}
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
                     />
-                  </div>
-                </div>
-
-                <div className="col-sm-2">
-                  <span>Plaza</span>
-                  <div className="form-group">
-                    <SearchableSelect
-                      options={plazaOption}
-                      value={selectedOption}
-                      onChange={handleSelectChange}
-                    />
-                  </div>
-                </div>
-
-                <div className="col-sm-4">
-                  <div className="form-group mt-4">
-                    <button
-                      type="submit"
-                      className="btn btn-primary mr-2 btn-sm"
-                      onClick={handleSubmit}
-                    >
-                      Search
-                    </button>{" "}
-                    <button className="btn btn-warning mr-2 btn-sm ">
-                      Print
-                    </button>
-                    <select className="btn btn-warning btn-sm p-t-8 p-b-8">
-                      <option value="">Export As</option>
-                      <option value="xlsx">XLSX</option>
-                      <option value="xls">XLS</option>
-                      <option value="png">PNG</option>
-                      <option value="txt">TXT</option>
-                      <option value="json">JSON</option>
-                      <option value="xml">XML</option>
-                      <option value="doc">DOC</option>
-                      <option value="docx">DOCX</option>
-                    </select>
                   </div>
                 </div>
               </div>
-            </form>
+              <div className="row gx-5">
+                <div className="col">
+                  <div className="row p-2">
+                    <label className="col-5">Cash 1</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="d-flex p-2">
+                    <label className="col-5">Online Monthly Pass Amount</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row gx-5">
+                <div className="col">
+                  <div className="row p-2">
+                    <label className="col-5">Cash 2</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="d-flex p-2">
+                    <label className="col-5">Cash Deposited By Tc</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row gx-5">
+                <div className="col">
+                  <div className="row p-2">
+                    <label className="col-5">Fast Tag Collection</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="d-flex p-2">
+                    <label className="col-5">Cash Deposited In Bank</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row gx-5">
+                <div className="col">
+                  <div className="row p-2">
+                    <label className="col-5">Cash Deposited In Arcpl</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  {/* <div className="d-flex p-2">
+                    <label className="col-5">Cash Deposited In Bank</label>
+                    <input
+                      className="col-5 form-control"
+                      type="text"
+                      placeholder="0"
+                    />
+                  </div> */}
+                </div>
+              </div>
+            </div>
+            <div className="border">
+              <div className="col d-flex justify-content-center">Expenses</div>
+              <div className="p-2">
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Sr.No</th>
+                      <th>Expense</th>
+                      <th>Amount</th>
+                      <th>Voucher No</th>
+                      <th>Naration</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row, index) => (
+                      <tr key={row.id}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <select
+                            className="form-control"
+                            value={row.expense}
+                            onChange={(e) =>
+                              handleInputChange(
+                                row.id,
+                                "expense",
+                                e.target.value
+                              )
+                            }
+                          >
+                            <option value="1">Ankadhal</option>
+                            <option value="2">B</option>
+                            <option value="3">C</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input
+                            className="form-control"
+                            type="text"
+                            placeholder="Amount"
+                            value={row.amount}
+                            onChange={(e) =>
+                              handleInputChange(
+                                row.id,
+                                "amount",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            className="form-control"
+                            type="text"
+                            placeholder="Voucher No"
+                            value={row.voucherNo}
+                            onChange={(e) =>
+                              handleInputChange(
+                                row.id,
+                                "voucherNo",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </td>
+                        <td>
+                          <textarea
+                            type="text"
+                            className="form-control"
+                            rows="1.9"
+                            placeholder="Narration"
+                            value={row.narration}
+                            onChange={(e) =>
+                              handleInputChange(
+                                row.id,
+                                "narration",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </td>
+                        <td className="">
+                          <MdDeleteForever
+                            onClick={() => deleteRow(row.id)}
+                            style={{ cursor: "pointer", color: "red" }}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={addRow}
+                >
+                  Add Row
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="col-4 border">
+            <div className="col d-flex justify-content-center">
+              Summary Report
+            </div>
+            <div className="row justify-content-between p-2">
+              <label className="col-6">Opening Amount:</label>
+              <input
+                className="col-6 form-control"
+                type="text"
+                placeholder="Opening Amount"
+              />
+            </div>
+            <div className="row justify-content-between p-2">
+              <label className="col-6 ">Total Cash Recived:</label>
+              <input
+                className="col-6 form-control"
+                type="text"
+                placeholder="Total Cash Recived"
+              />
+            </div>
+            <div className="row justify-content-between p-2">
+              <label className="col-6">Total Fast Tag Recivable :</label>
+              <input
+                className="col-6 form-control"
+                type="text"
+                placeholder="Total Fast Tag Recivable"
+              />
+            </div>
+            <div className="row justify-content-between p-2">
+              <label className="col-6">Total Collection:</label>
+              <input
+                className="col-6 form-control"
+                type="text"
+                placeholder="Total Collection"
+              />
+            </div>
+            <div className="row justify-content-between p-2">
+              <label className="col-6">Total Expense:</label>
+              <input
+                className="col-6 form-control"
+                type="text"
+                placeholder="Total Expense"
+              />
+            </div>
+            <div className="row justify-content-between p-2">
+              <label className="col-6">Closing Amount:</label>
+              <input
+                className="col-6 form-control"
+                type="text"
+                placeholder="Closing Amount"
+              />
+            </div>
+            <div className="d-flex justify-content-center p-2">
+              <button className="btn btn-warning">Submit</button>
+            </div>
           </div>
         </div>
-        <div>{renderTable()}</div>
       </div>
     </>
   );
 };
 
-export default PlazaReport;
+export default PlazaEntry;
+
+
+
+// remitance  * 365 
+//add user - user master 

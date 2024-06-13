@@ -132,7 +132,7 @@ const PlazaReport = () => {
                       onClick={handleSubmit}
                     >
                       Search
-                    </button>{" "}
+                    </button>
                     <button className="btn btn-warning mr-2 btn-sm ">
                       Print
                     </button>
@@ -172,9 +172,11 @@ const PlazaReport = () => {
                     </th>
                   </tr> */}
 
-                  <tr>
-                    <th>sr</th>
-                    <th className="">Date</th>
+                  <tr className="f-s-13">
+                    {/* <th>sr</th> */}
+                    <th className="">
+                      <span className="p-5">Date</span>
+                    </th>
                     <th>OPENING AMOUNT</th>
                     <th>ADVANCE FROM H.O</th>
                     <th>CASH 1</th>
@@ -183,7 +185,8 @@ const PlazaReport = () => {
                     <th>ONLINE MONTHLY PASS AMOUNT</th>
                     <th>GROSS CASH RECEIVABLE FROM TOLL PLAZA</th>
                     <th>
-                      TOTAL CASH RECEIVED FROM TC INCLUDING BALAJI CASH RECEIPTS
+                      <span>TOTAL CASH RECEIVED FROM TC INCLUDING BALAJI</span>
+                      CASH RECEIPTS
                     </th>
                     <th>TOTAL RECEPTS FROM TC</th>
                     <th>SHORT / EXCESS COLLECTION FROM TC</th>
@@ -202,7 +205,7 @@ const PlazaReport = () => {
                   {postData.data &&
                     postData.data.map((eachData) => (
                       <tr key={eachData.id}>
-                        <td>sr</td>
+                        {/* <td>sr</td> */}
                         <td>{eachData.date_rep}</td>
                         <td>{eachData.initial_opn}</td>
                         <td>{eachData.adv_from_ho}</td>

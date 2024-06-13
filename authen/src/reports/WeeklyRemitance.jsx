@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./PlazaReport.css";
 // import Select from "../pages/role/SearchSelectInput";
 // import SearchSelectedInput from "../pages/role/SearchSelectInput";

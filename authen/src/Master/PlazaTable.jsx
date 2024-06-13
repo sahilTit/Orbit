@@ -4,7 +4,6 @@ import { FaRegEdit } from "react-icons/fa";
 import { Api2 } from "../context/Apis";
 import AddPlazaModal from "../funcn/modal/AddPlazaModal";
 import EditPlazaModal from "../funcn/modal/EditPlazaModel";
-import CryptoJS from "crypto-js";
 
 const Usermaster = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,7 +84,7 @@ const Usermaster = () => {
     fetchData2();
   }, []);
 
-  const plazaId = data2.map((e) => e.plaza_id);
+  // const plazaId = data2.map((e) => e.plaza_id);
   // console.log(plazaId);
   // setPlazaId(data2.map((e) => e.plaza_id));
   // console.log(plazaId)

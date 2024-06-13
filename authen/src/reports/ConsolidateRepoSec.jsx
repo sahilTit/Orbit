@@ -178,7 +178,7 @@ const PlazaReport = () => {
                   </tr> */}
 
                   <tr>
-                    <th className="">Name</th>
+                    {/* <th className="">sr</th> */}
                     <th>Toll Plaza Name</th>
                     <th>cash 1</th>
                     <th>CASH 2</th>
@@ -193,9 +193,9 @@ const PlazaReport = () => {
                 </thead>
                 <tbody>
                   {data &&
-                    data.map((eachData, index) => (
+                    data.map((eachData) => (
                       <tr key={eachData.cash_1}>
-                        <td>{index + 1}</td>
+                        {/* <td>{index + 1}</td> */}
                         <td>{eachData.name}</td>
                         <td>{eachData.cash_1}</td>
                         <td>{eachData.cash_2}</td>
