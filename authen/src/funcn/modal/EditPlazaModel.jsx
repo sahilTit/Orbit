@@ -1,19 +1,32 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 const EditPlazaModal = ({ show, handleClose, plaza }) => {
-  const [name, setName] = useState(plaza && plaza.name);
-  const [address, setAddress] = useState(plaza ? plaza.addr : "");
-  const [remi, setRemi] = useState(plaza ? plaza.remi : "");
-  const [opnAmt, setOpnAmt] = useState(plaza ? plaza.opn_amt : "");
-  const [validFrom, setValidFrom] = useState(plaza ? plaza.valid_from : "");
-  const [validTo, setValidTo] = useState(plaza ? plaza.valid_to : "");
-  const [plazaType, setPlazaType] = useState(plaza ? plaza.type : "");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [remi, setRemi] = useState("");
+  const [opnAmt, setOpnAmt] = useState("");
+  const [validFrom, setValidFrom] = useState("");
+  const [validTo, setValidTo] = useState("");
+  const [plazaType, setPlazaType] = useState("");
+  const [contract, setCont] = useState("");
 
-  const [contract, setCont] = useState(plaza ? plaza.contract : "");
+  useEffect(() => {
+    if (plaza) {
+      setName(plaza.name);
+      setAddress(plaza.addr);
+      setRemi(plaza.remitance);
+      setOpnAmt(plaza.opn_amt);
+      setValidFrom(plaza.valid_from);
+      setValidTo(plaza.valid_to);
+      setPlazaType(plaza.ptype);
+      setCont(plaza.contract);
+    }
+  }, [plaza]);
+
   const handleEdit = async (e) => {
     e.preventDefault();
     try {
@@ -60,7 +73,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <Form.Control
               type="text"
               placeholder="Name"
-              defaultValue={plaza.name}
+              value={name}
               onChange={(e) => setName(e.target.value)}
               autoFocus
             />
@@ -70,7 +83,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <Form.Control
               type="text"
               placeholder="Address"
-              defaultValue={plaza.addr}
+              value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
           </Form.Group>
@@ -78,7 +91,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <Form.Label>Valid From</Form.Label>
             <Form.Control
               type="date"
-              defaultValue={plaza.valid_from}
+              value={validFrom}
               onChange={(e) => setValidFrom(e.target.value)}
             />
           </Form.Group>
@@ -86,7 +99,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <Form.Label>Valid To</Form.Label>
             <Form.Control
               type="date"
-              defaultValue={plaza.valid_to}
+              value={validTo}
               onChange={(e) => setValidTo(e.target.value)}
             />
           </Form.Group>
@@ -95,7 +108,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <Form.Control
               type="text"
               placeholder="Remitance"
-              defaultValue={plaza.remi}
+              value={remi}
               onChange={(e) => setRemi(e.target.value)}
             />
           </Form.Group>
@@ -104,7 +117,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <Form.Control
               type="text"
               placeholder="Opening Amount"
-              defaultValue={plaza.opn_amt}
+              value={opnAmt}
               onChange={(e) => setOpnAmt(e.target.value)}
             />
           </Form.Group>
@@ -113,7 +126,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <Form.Control
               type="text"
               placeholder="Contract Amount"
-              defaultValue={plaza.contract}
+              value={contract}
               onChange={(e) => setCont(e.target.value)}
             />
           </Form.Group>
@@ -122,7 +135,7 @@ const EditPlazaModal = ({ show, handleClose, plaza }) => {
             <select
               className="custom-select"
               id="inputGroupSelect01"
-              defaultValue={plazaType}
+              value={plazaType}
               onChange={(e) => setPlazaType(e.target.value)}
             >
               <option value="1">Regular Plaza</option>

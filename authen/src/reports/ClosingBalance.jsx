@@ -3,7 +3,6 @@ import "./PlazaReport.css";
 // import Select from "../pages/role/SearchSelectInput";
 // import SearchSelectedInput from "../pages/role/SearchSelectInput";
 import "react-datepicker/dist/react-datepicker.css";
-import { Api8 } from "../context/Apis";
 // import DatePicker from "react-datepicker";
 
 const PlazaReport = () => {

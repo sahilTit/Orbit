@@ -44,6 +44,20 @@ const PlazaReport = () => {
     handlePostRequest();
   };
 
+  const formatDate = (dateString) => {
+    // Comment this if using date-fns
+    const date = new Date(dateString);
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    return date.toLocaleDateString("en-GB", options).replace(/ /g, "-");
+  };
+
+  // const fdate=(value)=>{
+  //   const date = mew Date(value)
+  //   const formatedDate = `${date.getDate()}`
+  // }
+
+  // console.log(postData.data.map((e) => e.initial_opn));
+
   return (
     <>
       <div className="container-fluid ">
@@ -206,9 +220,12 @@ const PlazaReport = () => {
                     postData.data.map((eachData) => (
                       <tr key={eachData.id}>
                         {/* <td>sr</td> */}
-                        <td>{eachData.date_rep}</td>
-                        <td>{eachData.initial_opn}</td>
-                        <td>{eachData.adv_from_ho}</td>
+                        <td>{formatDate(eachData.date_rep)}</td>
+                        <td>
+                          {parseFloat(eachData.opening_amt) +
+                            parseFloat(eachData.initial_opn)}
+                        </td>
+                        <td>{parseFloat(eachData.adv_from_ho)}</td>
                         <td>{eachData.total_cash_recievable}</td>
                         <td>{eachData.balaji}</td>
                         <td>{eachData.monthly_pass_amt}</td>

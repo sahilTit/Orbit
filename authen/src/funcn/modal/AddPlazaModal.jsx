@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -11,8 +11,27 @@ const AddPlazaModal = ({ show, handleClose, handleAdd }) => {
   const [opnAmt, setOpnAmt] = useState("");
   const [validFrom, setValidFrom] = useState("");
   const [validTo, setValidTo] = useState("");
-  const [contAmt,setContAmt] = useState("")
+  const [contAmt, setContAmt] = useState("");
   const [plazaType, setPlazaType] = useState("");
+
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
+  useEffect(() => {
+    // Check if any required field is empty
+    if (
+      !name ||
+      !address ||
+      !remi ||
+      !opnAmt ||
+      !validFrom ||
+      !validTo ||
+      !plazaType
+    ) {
+      setIsSubmitDisabled(true);
+    } else {
+      setIsSubmitDisabled(false);
+    }
+  }, [name, address, remi, opnAmt, validFrom, validTo, plazaType]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,8 +55,9 @@ const AddPlazaModal = ({ show, handleClose, handleAdd }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3" 
-        //   controlId="exampleForm.ControlInput1"
+          <Form.Group
+            className="mb-3"
+            //   controlId="exampleForm.ControlInput1"
           >
             <Form.Label>Plaza Name</Form.Label>
             <Form.Control
@@ -89,7 +109,8 @@ const AddPlazaModal = ({ show, handleClose, handleAdd }) => {
             <Form.Label>Contract Amount</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Contract Amount"
+              // placeholder="Contract Amount"
+              value={remi ? remi * 365 : 0}
               onChange={(e) => setContAmt(e.target.value)}
             />
           </Form.Group>
@@ -110,7 +131,11 @@ const AddPlazaModal = ({ show, handleClose, handleAdd }) => {
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          disabled={isSubmitDisabled}
+        >
           Save Changes
         </Button>
       </Modal.Footer>

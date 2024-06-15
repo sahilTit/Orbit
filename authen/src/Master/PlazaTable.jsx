@@ -5,7 +5,7 @@ import { Api2 } from "../context/Apis";
 import AddPlazaModal from "../funcn/modal/AddPlazaModal";
 import EditPlazaModal from "../funcn/modal/EditPlazaModel";
 
-const Usermaster = () => {
+const PlazaMaster = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [search, setSearch] = useState("");
@@ -23,6 +23,9 @@ const Usermaster = () => {
     setSelectedPlaza(plaza);
     setShowEditModal(true);
   };
+
+  // console.log(data2)
+
   // const max = localStorage.getItem("auth_token");
   // console.log(max);
 
@@ -197,7 +200,7 @@ const Usermaster = () => {
   );
 };
 
-export default Usermaster;
+export default PlazaMaster;
 
 // remitance * 365 = contract Amount
 

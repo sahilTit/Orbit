@@ -1,26 +1,61 @@
 import { useState, useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-// import { data } from "jquery";
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { DataContext } from "../context/DataContext";
+import AddUserModal from "../funcn/modal_user/AddUserModal";
+import EditUserModal from "../funcn/modal_user/EditUserModal";
 
 const Usermaster = () => {
-  // const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [search, setSearch] = useState("");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedPlaza, setSelectedPlaza] = useState(null);
 
-  const [show, setShow] = useState(false);
+  // const handleShowAddModal = () => setShowAddModal(true);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [showAddModal, setShowAddModal] = useState(false);
+  // const [showEditModal, setShowEditModal] = useState(false);
+  // const [selectedPlaza, setSelectedPlaza] = useState(null);
+  // const [plazaId, setPlazaId] = useState("");
+
+  const handleCloseAddModal = () => setShowAddModal(false);
+  const handleShowAddModal = () => setShowAddModal(true);
+
+  const handleCloseEditModal = () => setShowEditModal(false);
+  const handleShowEditModal = (plaza) => {
+    setSelectedPlaza(plaza);
+    setShowEditModal(true);
+  };
+  // const [show, setShow] = useState(false);
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   const { data3 } = useContext(DataContext);
 
+  // console.log(data2.map((e)=>e.name))
+  const handleAdd = async (plazaData) => {
+    try {
+      const response = await fetch(
+        "http://192.168.1.131/toll_manage/appv1/manage_user/add",
+        {
+          method: "POST",
+          body: JSON.stringify(plazaData),
+        }
+      );
+      if (response.ok) {
+        // fetchData2();
+        handleCloseAddModal();
+      } else {
+        console.log("Error Adding Plaza");
+      }
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const filteredData =
     data3 &&
     data3.filter((item) =>
@@ -81,7 +116,7 @@ const Usermaster = () => {
               Clear
             </button>
           </div>
-          <button className="btn btn-primary" onClick={handleShow}>
+          <button className="btn btn-primary" onClick={handleShowAddModal}>
             Add User
           </button>
         </div>
@@ -115,6 +150,7 @@ const Usermaster = () => {
                       /{" "}
                       <FaRegEdit
                         style={{ color: "green" }}
+                        onClick={() => handleShowEditModal(eachData)}
                         // onClick={console.log("Edit")}
                       />
                     </td>
@@ -138,64 +174,16 @@ const Usermaster = () => {
           </nav>
         </div>
       </div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add User </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>User Name</Form.Label>
-              <Form.Control type="Name  " placeholder="Name" autoFocus />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Mobile Number</Form.Label>
-              <Form.Control type="number" placeholder="Mobile Number" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label> Email</Form.Label>
-              <Form.Control type="email" placeholder="Email" />
-            </Form.Group>
-
-            <FloatingLabel className="mb-3 " controlId="floatingSelect">
-              <select className="custom-select" id="inputGroupSelect01">
-                <option selected>Select Role</option>
-                <option value="1">Toll Operator</option>
-                <option value="2">Accounts Reports</option>
-                <option value="3">Supervisor</option>
-                <option value="4">Admin</option>
-              </select>
-            </FloatingLabel>
-
-            <FloatingLabel className="mb-3 " controlId="floatingSelect">
-              <select className="custom-select" id="inputGroupSelect01">
-                <option selected>Select Plaza</option>
-                {data3 &&
-                  data3.map((eachData) => (
-                    <option key={eachData.id} value={eachData.id}>
-                      {eachData.plaza}
-                    </option>
-                  ))}
-              </select>
-            </FloatingLabel>
-            <Form.Group
-              className="mb-3"
-              //   controlId="exampleForm.ControlPassword"
-            >
-              <Form.Label> Password</Form.Label>
-              <Form.Control type="password" placeholder="password" />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <AddUserModal
+        show={showAddModal}
+        handleClose={handleCloseAddModal}
+        handleAdd={handleAdd}
+      />
+      <EditUserModal
+        show={showEditModal}
+        handleClose={handleCloseEditModal}
+        plaza={selectedPlaza}
+      />
     </>
   );
 };
